@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>mozart by payutc</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">mozart</a>
+          <div class="nav-collapse">
+            <p class="navbar-text pull-right"><span id="time"></span> | <span id="seller"></span></p>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span12" id="buyer">
+          Badgez !
+        </div>
+      </div>
+      <div class="row-fluid">
+        <div class="span4">
+          <table class="table table-striped" id="table-panier">
+            <thead>
+              <tr>
+                <th class="nom">Nom</th>
+                <th class="qte">Qté</th>
+                <th class="prix">Prix</th>
+              </tr>
+            </thead>
+            <tbody id="lignes">
+              <tr>
+                <td>Erreur de chargement de la caisse</td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <button class="btn btn-primary btn-large cancel-btn" id="effacertout">Effacer toutes les lignes</button>
+          <button class="btn btn-primary btn-large cancel-btn" id="annultransac">Annulation transaction</button>
+        </div>
+        
+        <div class="span2" id="tableau-categories">
+          <button class="btn"></button><br />
+          <button class="btn"></button><br />
+          <button class="btn"></button><br />
+          <button class="btn"></button>
+        </div>
+        
+        <div class="span6" id="tableau-articles">
+          <button class="btn"></button><button class="btn"></button><button class="btn"></button><button class="btn"></button><button class="btn"></button><br />
+          <button class="btn"></button><button class="btn"></button><button class="btn"></button><button class="btn"></button><button class="btn"></button><br />
+          <button class="btn"></button><button class="btn"></button><button class="btn"></button><button class="btn"></button><button class="btn"></button><br />
+          <button class="btn"></button><button class="btn"></button><button class="btn"></button><button class="btn"></button><button class="btn"></button><br />
+          <button class="btn"></button><button class="btn"></button><button class="btn"></button><button class="btn"></button><button class="btn"></button><br />
+        </div>
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <p>&copy; payutc 2012</p>
+      </footer>
+
+    </div><!--/.fluid-container-->
+
+    <div id="status">
+      
+    </div>
+    
+    <applet name="concerto" codebase="class/" code="Concerto.class" height="300px" width="300px" archive="concerto.jar"></applet>
+    
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery-1.7.2.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/soapclient.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/pbuy.js"></script>
+  </body>
+</html>
