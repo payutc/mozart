@@ -7,7 +7,8 @@ var nbCategories = 4;
 var activeCategorie = 0;
 
 var soapurl = {
-    pbuy: "/buckutt/PBUY.class.php"
+    pbuy: "/buckutt/PBUY.class.php",
+    poss: "/buckutt/POSS.class.php"
 };
 
 
@@ -106,7 +107,7 @@ function updateJS(status, data){
         case "cardInserted":
             if(lignes.length > 0){
                 console.log("Paiement");
-                $("#status").html("Paiement en cours...").show();
+                $("#status").html("Paiement en cours...<br />").show();
                 PBUY.loadBuyer(data.toUpperCase(), 5);
             }
         break;
@@ -146,5 +147,13 @@ $(document).ready(function(){
     });
     
     updateLignes();
-    PBUY.loadSeller(); // Charge le seller de test et les propositions associées
+    //PBUY.loadSeller(); // Charge le seller de test et les propositions associées
+    var params = jQuery.deparam.querystring();
+    if(params.ticket){
+      console.debug("Validation du ticket "+params.ticket);
+      POSS.loadPOS(params.ticket);
+    }
+    else {
+      POSS.sellerLogin();
+    }
 });
