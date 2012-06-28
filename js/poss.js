@@ -37,7 +37,7 @@ POSS.loadPOS = function(ticket, pos){
   doRequest("loadPos", {
     ticket: ticket,
     service: POSS.service,
-    poi_id: 46}, // FIXME Option pour l'ID de POS
+    poi_id: 51}, // FIXME Option pour l'ID de POS
   POSS.getSellerIdentity);
 }
 
