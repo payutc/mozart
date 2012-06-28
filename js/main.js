@@ -8,7 +8,7 @@ var activeCategorie = 0;
 
 var soapurl = {
     pbuy: "/buckutt/PBUY.class.php",
-    poss: "/buckutt/POSS.class.php"
+    poss: "/buckutt/POSS2.class.php"
 };
 
 

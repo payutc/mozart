@@ -232,8 +232,9 @@ SOAPClient._node2object = function(node, wsdlTypes)
 	if (node.childNodes.length == 1 && (node.childNodes[0].nodeType == 3 || node.childNodes[0].nodeType == 4))
 		return SOAPClient._node2object(node.childNodes[0], wsdlTypes);
 	var isarray = SOAPClient._getTypeFromWsdl(node.nodeName, wsdlTypes).toLowerCase().indexOf("arrayof") != -1;
+        var ismyarray = SOAPClient._getTypeFromWsdl(node.nodeName, wsdlTypes).toLowerCase().indexOf("soap-enc:array") != -1;
 	// object node
-	if(!isarray)
+	if(!ismyarray && !isarray)
 	{
 		var obj = null;
 		if(node.hasChildNodes())
@@ -245,6 +246,17 @@ SOAPClient._node2object = function(node, wsdlTypes)
 		}
 		return obj;
 	}
+        else if(ismyarray){
+		// create node ref
+		var l = new Object;
+		for(var i = 0; i < node.childNodes.length; i++){
+			var content = SOAPClient._node2object(node.childNodes[i], wsdlTypes);
+                        //console.log(node.childNodes[i].length);
+                        l[content.key] = content.value;
+                        // FAUT Gérer ça récursivement l[content.key] = SOAPClient._node2object(content.value, wsdlTypes);  
+                }
+		return l;
+        }
 	// list node
 	else
 	{
@@ -295,7 +307,7 @@ SOAPClient._getTypesFromWsdl = function(wsdl)
 	// MOZ
 	if(ell.length == 0)
 	{
-		ell = wsdl.getElementsByTagName("element");	     
+		ell = wsdl.getElementsByTagName("part");	     
 		useNamedItem = false;
 	}
 	for(var i = 0; i < ell.length; i++)

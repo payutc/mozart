@@ -49,3 +49,8 @@ body {
 #status {
   margin-top: 10px;
 }
+
+#status.error {
+  background: #ff0000;
+  color: #fff;
+}
