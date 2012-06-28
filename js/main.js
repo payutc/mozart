@@ -75,6 +75,12 @@ function updateLignes(){
     '</tr>');
 }
 
+function restore(){
+    lignes.length = 0;
+    updateLignes();
+    $("#status").html("Passer un badge pour valider");
+}
+
 function formatEuros(montant){
     return montant.toFixed(2).replace(".",",")+" €";
 }
@@ -107,14 +113,15 @@ function updateJS(status, data){
         case "cardInserted":
             if(lignes.length > 0){
                 console.log("Paiement");
-                $("#status").html("Paiement en cours...<br />").show();
-                PBUY.loadBuyer(data.toUpperCase(), 5);
+                $("#status").html("Paiement en cours... <b>Ne pas retirer le badge !</b>");
+                POSS.transaction(data.toUpperCase());
             }
         break;
     }
 }
 
 $(document).ready(function(){
+    // Mise à jour d l'heure
     window.setInterval(function(){
         var dt = new Date();
         $("#time").html(dt.toLocaleTimeString());
@@ -125,6 +132,7 @@ $(document).ready(function(){
         showButtons($(this).attr("catid"));
     });
     
+    // Clic sur les boutons d'articles
     $("#tableau-articles button").click(function(){
         var aid = $(this).attr("aid");
         for(i=0;i<lignes.length;i++){
@@ -141,19 +149,18 @@ $(document).ready(function(){
         updateLignes();
     });
     
+    // Clic sur effacer tout
     $("#effacertout").click(function(){
        lignes.length = 0;
        updateLignes(); 
     });
     
-    updateLignes();
-    //PBUY.loadSeller(); // Charge le seller de test et les propositions associées
-    var params = jQuery.deparam.querystring();
-    if(params.ticket){
-      console.debug("Validation du ticket "+params.ticket);
-      POSS.loadPOS(params.ticket);
-    }
-    else {
-      POSS.sellerLogin();
-    }
+    // Remise à zéro de la caisse
+    restore();
+    
+    // Connexion du vendeur
+    POSS.isLoadedSeller();
+    
+    // Vérification du bon démarrage de concerto
+    
 });

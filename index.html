@@ -63,6 +63,8 @@
           </table>
           <button class="btn btn-primary btn-large cancel-btn" id="effacertout">Effacer toutes les lignes</button>
           <button class="btn btn-primary btn-large cancel-btn" id="annultransac">Annulation transaction</button>
+
+          <div id="status" class="well">Chargement...</div>
         </div>
         
         <div class="span2" id="tableau-categories">
@@ -89,17 +91,15 @@
 
     </div><!--/.fluid-container-->
 
-    <div id="status">
-      
-    </div>
     
-    <applet name="concerto" codebase="class/" code="Concerto.class" height="300px" width="300px" archive="concerto.jar"></applet>
+    <applet name="concerto" codebase="class/" code="Concerto.class" height="300" width="300" archive="concerto.jar"></applet>
     
 
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/jquery-1.7.2.min.js"></script>
+    <script src="js/jquery-ui-1.8.21.custom.min.js"></script>
     <script src="js/jquery.ba-bbq.min.js"></script>
     <script src="js/bootstrap.js"></script>
     <script src="js/soapclient.js"></script>

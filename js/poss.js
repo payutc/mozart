@@ -1,12 +1,30 @@
 var POSS = {};
 
-POSS.sellerLogin = function(){
+POSS.isLoadedSeller = function(){
   var pl = new SOAPClientParameters();
-  SOAPClient.invoke(soapurl.poss, "getCasUrl", pl, true, POSS.casUrlReceived);
+  SOAPClient.invoke(soapurl.poss, "isLoadedSeller", pl, true, POSS.isLoadedSeller_result);
+}
+
+POSS.isLoadedSeller_result = function(r){
+  if(r == 1){
+    POSS.getSellerIdentity(1);
+  }
+  else {
+    var params = jQuery.deparam.querystring();
+    if(params.ticket){
+      console.debug("Validation du ticket "+params.ticket);
+      POSS.loadPOS(params.ticket);
+    }
+    else {
+      // Envoi vers le CAS
+      var pl = new SOAPClientParameters();
+      SOAPClient.invoke(soapurl.poss, "getCasUrl", pl, true, POSS.casUrlReceived);
+    }
+  }
 }
 
 POSS.casUrlReceived = function(r){
-  window.location = jQuery.param.querystring(r, 'service='+window.location.href.split("?")[0]);
+  window.location = jQuery.param.querystring(r, 'service='+window.location.href.split("?")[0]); // TODO ajouter /login à l'url
 }
 
 POSS.loadPOS = function(ticket, pos){
@@ -76,46 +94,27 @@ POSS.getPropositions_callBack = function(r){
 
 
 
-
-POSS.loadBuyer = function(data, mol){
-  return;
-  var pl = new SOAPClientParameters();
-	pl.add("data", data);
-	pl.add("meanOfLogin", mol);
-	pl.add("ip", "");
-	SOAPClient.invoke(soapurl.pbuy, "loadBuyer", pl, true, POSS.getBuyerIdentity);
-}
-POSS.getBuyerIdentity = function(r){
-    if(r == 1){
-        var pl = new SOAPClientParameters();
-    	SOAPClient.invoke(soapurl.pbuy, "getBuyerIdentity", pl, true, POSS.buyObjects);
-    } else {
-        console.log("Erreur de loadBuyer: "+r);
-    }
-}
-POSS.buyObjects = function(r){
-    var result = CSVToArray(r);
+POSS.transaction = function(badge){
     //"9421","arthur","puyou","/!\ pas BDE /!\ puyouart","","4200";
-    $("#status").append("<h2>"+result[0][1]+" "+result[0][2]+"</h2>");
     
     var csvArticles = "";
-    var csvPrix = "";
-    for(i=0;i<lignes.length;i++){
+    for(i=0;i<lignes.length;i++)
         csvArticles = csvArticles + lignes[i].article + ";";
-        csvPrix = csvPrix + articles[lignes[i].article].prix * 100 + ";";
-    }
+
     var pl = new SOAPClientParameters();
-    pl.add("obj_id", csvArticles);
-    pl.add("credit", csvPrix);
-    SOAPClient.invoke(soapurl.pbuy, "buyObjects", pl, true, POSS.buyObjects_callBack);
+    pl.add("obj_ids", csvArticles);
+    pl.add("badge_id", badge);
+
+    SOAPClient.invoke(soapurl.poss, "transaction", pl, true, POSS.transaction_result);
 }
-POSS.buyObjects_callBack = function(r){
-    console.log("buyObjects result: "+r);
-    $("#status").append("<br />Paiement réussi");
+
+POSS.transaction_result = function(r){
+    //console.log("transaction result: "+r);
+    // TODO traiter les erreurs !
+    if(r == 1)
+      $("#status").html("Paiement réussi !").effect("highlight", {color: "#00CC00"}, 1500, restore);
+    else
+      $("#status").html("Une erreur s'est produite.").effect("highlight", {color: "#FF0000"}, 1500, restore);
    
-    window.setTimeout(function(){
-        lignes.length = 0;
-        updateLignes();
-        $("#status").html("").hide();
-    }, 1000);
+ 
 }
