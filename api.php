@@ -14,6 +14,6 @@ if(isset($_GET['method'])) {
 	echo json_encode(call_user_func_array(array($POSS,$method), $_POST));
 }
 
-if(isset($POSS->cookies)) {
+if(isset($POSS->_cookies)) {
 	$_SESSION['cookies_mozart'] = $POSS->_cookies;
 }
