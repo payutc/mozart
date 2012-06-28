@@ -1,12 +1,13 @@
 var POSS = {};
 
+POSS.service = [location.protocol, '//', location.host, location.pathname].join('');
+
 POSS.isLoadedSeller = function(){
-  var pl = new SOAPClientParameters();
-  SOAPClient.invoke(soapurl.poss, "isLoadedSeller", pl, true, POSS.isLoadedSeller_result);
+  doRequest("isLoadedSeller", {}, POSS.isLoadedSeller_result);
 }
 
 POSS.isLoadedSeller_result = function(r){
-  if(r == "true"){
+  if(r == true){
     var m = new Object;
     m.success = "ok";
     POSS.getSellerIdentity(m);
@@ -17,10 +18,9 @@ POSS.isLoadedSeller_result = function(r){
       console.debug("Validation du ticket "+params.ticket);
       POSS.loadPOS(params.ticket);
     }
-    else {console.log("getcas");
+    else {
       // Envoi vers le CAS
-      var pl = new SOAPClientParameters();
-      SOAPClient.invoke(soapurl.poss, "getCasUrl", pl, true, POSS.casUrlReceived);
+      doRequest("getCasUrl", {}, POSS.casUrlReceived);
     }
   }
 }
@@ -34,28 +34,25 @@ POSS.casUrlReceived = function(r){
 }
 
 POSS.loadPOS = function(ticket, pos){
-  var pl = new SOAPClientParameters();
-  pl.add("ticket", ticket);
-  pl.add("service", window.location.href.split("?")[0]);
-  pl.add("poi_id", 2); // FIXME Option pour l'ID de POS
-  SOAPClient.invoke(soapurl.poss, "loadPos", pl, true, POSS.getSellerIdentity);
+  doRequest("loadPos", {
+    ticket: ticket,
+    service: POSS.service,
+    poi_id: 46}, // FIXME Option pour l'ID de POS
+  POSS.getSellerIdentity);
 }
 
-POSS.getSellerIdentity = function(r){console.log(r);
+POSS.getSellerIdentity = function(r){
   if(r.success){
-    var pl = new SOAPClientParameters();
-    SOAPClient.invoke(soapurl.poss, "getSellerIdentity", pl, true, POSS.getArticless);
+    doRequest("getSellerIdentity", {}, POSS.getArticless);
   }
   else {
-    console.log("Erreur de loadPos.");
     $("#status").html("Erreur n°"+r.error+"<br />"+r.error_msg).addClass("error");
     
     if(r.error == -1){
       $("#status").append('<br /><a href="#" id="retrycas">Cliquez ici pour retenter le login</a>');
       $("#retrycas").click(function(e){
         e.preventDefault();
-        var service = [location.protocol, '//', location.host, location.pathname].join('');
-        window.location = service;
+        window.location = POSS.service;
       })
     }
     // TODO gérer correctement toutes les erreurs possibles
@@ -66,73 +63,72 @@ POSS.getSellerIdentity = function(r){console.log(r);
 }
 
 POSS.getArticless = function(r){
-  console.log(r);
   if(r.success){
     $("#seller").html(r.success.firstname+" "+r.success.lastname);
 
-    var pl = new SOAPClientParameters();
-    SOAPClient.invoke(soapurl.poss, "getArticles", pl, true, POSS.getPropositions_callBack); 
+    doRequest("getArticles", {}, POSS.getArticless_result);
   }
 }
 
-POSS.getArticles = function(r){
-    var result = CSVToArray(r);
-
+POSS.getArticless_result = function(r){
     // On vide la liste d'articles
     articles = {};
-    categories = [
-        {
-            nom: 'Tout',
-            articles: []
-        },
-        {
-            nom: 'Rien',
-            articles: []
-        },
-        {
-            nom: 'Le reste',
-            articles: []
-        }
-    ];
+    categories = {};
     
-    for(i=0;i<result.length;i++){
-        if(result[i].length == 5){
-            var article = {
-                nom: result[i][1],
-                couleur: '',
-                prix: result[i][4]/100
-            };
-            articles[result[i][0]] = article;
-            categories[0].articles.push(result[i][0]);
-        }
+    // Génération des catégories de niveau 0
+    for(var key in r.success.categories){
+      var categorie = r.success.categories[key];
+      if(categorie.parent_id == null){
+        var newCategorie = {
+          nom: categorie.name,
+          articles: []
+        };
+        categories[categorie.id] = newCategorie;
+      }
     }
+    
+    // Remplissage des catégories avec les articles
+    for(var key in r.success.articles){
+      var article = r.success.articles[key];
+      
+      var newArticle = {
+            nom: article.name,
+            couleur: '',
+            prix: article.price/100
+      };
+      articles[article.id] = newArticle;
+      var parent = r.success.categories[article.categorie_id];
+
+      while(parent.parent_id != null){
+        parent = r.success.categories[parent.parent_id];
+      }
+      
+      categories[parent.id].articles.push(article.id);
+    }
+    
     updateCategories();
-    showButtons(0);
+    showButtons(-1);
 }
 
 
 
 POSS.transaction = function(badge){
-    //"9421","arthur","puyou","/!\ pas BDE /!\ puyouart","","4200";
-    
     var csvArticles = "";
-    for(i=0;i<lignes.length;i++)
-        csvArticles = csvArticles + lignes[i].article + ";";
+    for(var i=0;i<lignes.length;i++){
+      for(var j=0;j<lignes[i].quantite;j++)
+        csvArticles = csvArticles + lignes[i].article + " "; 
+    }
 
-    var pl = new SOAPClientParameters();
-    pl.add("obj_ids", csvArticles);
-    pl.add("badge_id", badge);
 
-    SOAPClient.invoke(soapurl.poss, "transaction", pl, true, POSS.transaction_result);
+    doRequest("transaction", {
+        badge_id: badge,
+        obj_ids: csvArticles},
+      POSS.transaction_result);
 }
 
 POSS.transaction_result = function(r){
-    //console.log("transaction result: "+r);
-    // TODO traiter les erreurs !
-    if(r == 1)
+    if(r.success)
       $("#status").html("Paiement réussi !").effect("highlight", {color: "#00CC00"}, 1500, restore);
     else
-      $("#status").html("Une erreur s'est produite.").effect("highlight", {color: "#FF0000"}, 1500, restore);
-   
- 
+      $("#status").html("Erreur n°"+r.error+"<br />"+r.error_msg).effect("highlight", {color: "#FF0000"}, 1500, restore);
 }

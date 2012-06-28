@@ -7,35 +7,39 @@ var nbCategories = 4;
 var activeCategorie = 0;
 
 var soapurl = {
-    pbuy: "/buckutt/PBUY.class.php",
-    poss: "/buckutt/POSS2.class.php"
+    poss: "api.php"
 };
 
 
 // Met à jour les catégories
 function updateCategories(){
     // Update depuis serveur
+    $("#tableau-categories button").each(function(){
+      $(this).html("").attr("disabled", "disabled");
+    });
     
-    for(i=0;i<nbCategories;i++){
-        var btn = $("#tableau-categories button:eq("+i+")");
-        if(categories[i]){
-            btn.attr("catid", i).removeClass("active").html(categories[i].nom);
-            if(i == 0)
-                btn.addClass("active");
-        }
-        else
-            btn.html("").attr("disabled", "disabled");
+    var i = 0;
+    for(var key in categories){
+        var categorie = categories[key];
+        $("#tableau-categories button:eq("+i+")").attr("catid", key)
+          .removeClass("active").removeAttr("disabled").html(categorie.nom);
+        i++;
     }
 }
 
 // Affiche une categorie
 function showButtons(categorie){
+    if(categorie == -1){
+      for (first in categories) break;
+      categorie = first;
+    }
+  
     activeCategorie = categorie;
     
     // Mise à jour du style des boutons
     for(i=0;i<nbCategories;i++){
         var btn = $("#tableau-categories button:eq("+i+")");
-        if(i == activeCategorie)
+        if(btn.attr("catid") == activeCategorie)
             btn.addClass("active");
         else
             btn.removeClass("active");
@@ -112,12 +116,15 @@ function updateJS(status, data){
     switch(status){
         case "cardInserted":
             if(lignes.length > 0){
-                console.log("Paiement");
                 $("#status").html("Paiement en cours... <b>Ne pas retirer le badge !</b>");
                 POSS.transaction(data.toUpperCase());
             }
         break;
     }
+}
+
+function doRequest(method, data, callback){
+  $.post(soapurl.poss+"?method="+method, data, callback, 'json');
 }
 
 $(document).ready(function(){
