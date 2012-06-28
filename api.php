@@ -3,7 +3,7 @@
 include 'config.php';
 session_start();
 
-$POSS = @new SoapClient($_CONF['soap_url'].'POSS2.class.php?wsdl');
+$POSS = new SoapClient($_CONF['soap_url'].'POSS2.class.php?wsdl');
 
 if(isset($_SESSION['cookies_mozart'])) {
 	$POSS->_cookies = $_SESSION['cookies_mozart'];
