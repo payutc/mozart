@@ -5,10 +5,10 @@ session_start();
 
 $POSS = @new SoapClient($_CONF['soap_url'].'POSS2.class.php?wsdl');
 
-if(isset($_SESSION['cookies'])) { 
-	$POSS->_cookies = $_SESSION['cookies'];
+if(isset($_SESSION['cookies_mozart'])) { 
+	$POSS->_cookies = $_SESSION['cookies_mozart'];
 } else {
-	$_SESSION['cookies'] = $POSS->_cookies;
+	$_SESSION['cookies_mozart'] = $POSS->_cookies;
 }
 
 if(isset($_GET['method'])) {
