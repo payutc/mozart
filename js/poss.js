@@ -41,7 +41,7 @@ POSS.loadPOS = function(ticket, pos){
   SOAPClient.invoke(soapurl.poss, "loadPos", pl, true, POSS.getSellerIdentity);
 }
 
-POSS.getSellerIdentity = function(r){
+POSS.getSellerIdentity = function(r){console.log(r);
   if(r.success){
     var pl = new SOAPClientParameters();
     SOAPClient.invoke(soapurl.poss, "getSellerIdentity", pl, true, POSS.getArticless);

@@ -233,7 +233,7 @@ SOAPClient._node2object = function(node, wsdlTypes)
 		return SOAPClient._node2object(node.childNodes[0], wsdlTypes);
 	var isarray = SOAPClient._getTypeFromWsdl(node.nodeName, wsdlTypes).toLowerCase().indexOf("arrayof") != -1;
         var ismyarray = SOAPClient._getTypeFromWsdl(node.nodeName, wsdlTypes).toLowerCase().indexOf("soap-enc:array") != -1;
-	// object node
+        // object node
 	if(!ismyarray && !isarray)
 	{
 		var obj = null;
@@ -251,9 +251,18 @@ SOAPClient._node2object = function(node, wsdlTypes)
 		var l = new Object;
 		for(var i = 0; i < node.childNodes.length; i++){
 			var content = SOAPClient._node2object(node.childNodes[i], wsdlTypes);
+                        console.log(node.childNodes[i].childNod);
                         //console.log(node.childNodes[i].length);
-                        l[content.key] = content.value;
-                        // FAUT Gérer ça récursivement l[content.key] = SOAPClient._node2object(content.value, wsdlTypes);  
+                        //l[content.key] = content.value;
+                        //console.log("bla");
+                        //console.log(node.childNodes[i]);
+                        //if(content.value.item){
+                        //  console.log(content.value.item);
+                          l[content.key+i+""] = content;
+                        //}
+                          
+                        //else
+                          //l[content.key] = content.value;
                 }
 		return l;
         }
