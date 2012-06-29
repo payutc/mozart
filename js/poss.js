@@ -132,3 +132,19 @@ POSS.transaction_result = function(r){
     else
       $("#status").html("Erreur n°"+r.error+"<br />"+r.error_msg).effect("highlight", {color: "#FF0000"}, 1500, restore);
 }
+
+POSS.getBuyerInfo = function(badge){
+    doRequest("getBuyerInfo", {
+        badge_id: badge},
+      POSS.getBuyerInfo_result);
+}
+
+POSS.getBuyerInfo_result = function(r){
+  if(r.success){
+    $("#infodata").html("Utilisateur : "+r.success.firstname+" "+r.success.lastname+"<br />"
+    +"Solde : "+formatEuros(r.success.solde/100));
+    $("#BuyerInfo").modal();
+  }
+  else
+    $("#status").html("Erreur n°"+r.error+"<br />"+r.error_msg).effect("highlight", {color: "#FF0000"}, 1500, restore);
+}

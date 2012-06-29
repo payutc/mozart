@@ -119,6 +119,10 @@ function updateJS(status, data){
                 $("#status").html("Paiement en cours... <b>Ne pas retirer le badge !</b>");
                 POSS.transaction(data.toUpperCase());
             }
+            else {
+              $("#status").html("Lecture en cours... <b>Ne pas retirer le badge !</b>");
+              POSS.getBuyerInfo(data.toUpperCase());
+            }
         break;
     }
 }
