@@ -144,7 +144,10 @@ POSS.getBuyerInfo_result = function(r){
     $("#infodata").html("Utilisateur : "+r.success.firstname+" "+r.success.lastname+"<br />"
     +"Solde : "+formatEuros(r.success.solde/100));
     $("#BuyerInfo").modal();
+    restore();
   }
-  else
-    $("#status").html("Erreur n°"+r.error+"<br />"+r.error_msg).effect("highlight", {color: "#FF0000"}, 1500, restore);
+  else {
+    $("#status").html("Erreur n°"+r.error+"<br />"+r.error_msg).effect("highlight", {color: "#FF0000"}, 1500, restore); 
+  }
+  
 }
