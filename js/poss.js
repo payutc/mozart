@@ -119,7 +119,6 @@ POSS.transaction = function(badge){
         csvArticles = csvArticles + lignes[i].article + " "; 
     }
 
-
     doRequest("transaction", {
         badge_id: badge,
         obj_ids: csvArticles},
@@ -127,9 +126,11 @@ POSS.transaction = function(badge){
 }
 
 POSS.transaction_result = function(r){
-    if(r.success)
+    if(r.success) {
+      // PRINT TICKET
+      PRINTER.ticket(lignes, r.success);
       $("#status").html("Paiement réussi !").effect("highlight", {color: "#00CC00"}, 1500, restore);
-    else
+    } else
       $("#status").html("Erreur n°"+r.error+"<br />"+r.error_msg).effect("highlight", {color: "#FF0000"}, 1500, restore);
 }
 
@@ -141,6 +142,7 @@ POSS.getBuyerInfo = function(badge){
 
 POSS.getBuyerInfo_result = function(r){
   if(r.success){
+    PRINTER.Solde(r.success.solde, r.success.firstname, r.success.lastname);
     $("#infodata").html("Utilisateur : "+r.success.firstname+" "+r.success.lastname+"<br />"
     +"Solde : "+formatEuros(r.success.solde/100));
     $("#BuyerInfo").modal();
