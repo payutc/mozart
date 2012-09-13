@@ -75,7 +75,7 @@ PRINTER.Solde = function(solde, firstname, lastname) {
 	txt += PRINTER.entete;
 	txt += newline.repeat(2);
 	txt += date;
-	txt ++ newline.repeat(2);
+	txt += newline.repeat(2);
 
 	var nom_prenom = firstname + " " + lastname;
 
