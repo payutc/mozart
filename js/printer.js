@@ -68,7 +68,8 @@ PRINTER.titre = "PICASSO - FOYER ETUDIANT";
 PRINTER.entete = " ".repeat(25 - PRINTER.titre.length/2) + "\x1B\x21\x02" + PRINTER.titre + "\x1B\x21\x01\x1B\x7B\x01"
 
 PRINTER.Solde = function(solde, firstname, lastname) {
-	var txt = "";
+	var txt = "", 
+		newline = PRINTER.newline;
 	
 	txt += PRINTER.entete;
 	txt += newline.repeat(2);
