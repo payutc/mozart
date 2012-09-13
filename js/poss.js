@@ -145,8 +145,8 @@ POSS.getBuyerInfo_result = function(r){
     //PRINTER.Solde(r.success.solde, r.success.firstname, r.success.lastname);
     $("#infodata").html("Utilisateur : "+r.success.firstname+" "+r.success.lastname+"<br />"
     +"Solde : "+formatEuros(r.success.solde/100)
-    +"<br /><button class=\"btn btn-primary btn-large\" onClick=\"PRINTER.Solde("+r.success.solde+", "
-    +r.success.firstname+", "+r.success.lastname+")\"> Imprimer </button>");
+    +"<br /><button class=\"btn btn-primary btn-large\" onClick=\"PRINTER.Solde("+r.success.solde+", "\""
+    +r.success.firstname+"\", "\""+r.success.lastname+"\")\"> Imprimer </button>");
     $("#BuyerInfo").modal();
     restore();
   }
