@@ -63,24 +63,33 @@ PRINTER.get_date = function() {
 
 	return dateString;
 }
+PRINTER.newline = chr(10);
+PRINTER.titre = "PICASSO - FOYER ETUDIANT";
+PRINTER.entete = " ".repeat(25 - PRINTER.titre.length/2) + "\x1B\x21\x02" + titre + "\x1B\x21\x01\x1B\x7B\x01"
 
-PRINTER.bold = function(txt) {
-	return c
+PRINTER.Solde = function(solde, firstname, lastname) {
+	var txt = "";
+	
+	txt += PRINTER.entete;
+	txt += newline.repeat(2);
+
+	var nom_prenom = firstname + " " + lastname;
+
+	txt += nom_prenom;
+	txt += newline;
+	txt += "Vous n'avez plu que " + solde;
+
+	PRINTER.print(txt);
+
 }
-PRINTER.ticket = function(products, infos) {	
-	var newline = chr(10),
+
+PRINTER.Ticket = function(products, infos) {	
+	var newline = PRINTER.newline,
 		date = PRINTER.get_date(),
 		nom_prenom = infos.firstname + " " + infos.lastname,
-		titre = "PICASSO - FOYER ETUDIANT"
-		entete = " ".repeat(25 - titre.length/2) + "\x1B\x21\x02" + titre + "\x1B\x21\x01\x1B\x7B\x01",
+		entete = PRINTER.entete,
 		total = 0,
 		txt = [];
-
-		produits_fake = [
-			{ nom  : "Cuvee des Trolls", quantite : 58, prix: 1.20 },
-			{ nom  : "Delirium Tremens", quantite : 52, prix: 1.60 },
-			{ nom  : "Bush", quantite : 1, prix: 1.10 },
-		];
 
 	txt += entete;
 	txt += newline.repeat(2);
@@ -92,14 +101,14 @@ PRINTER.ticket = function(products, infos) {
 	products = produits_fake;
 
 	for(var i=0;i<products.length;i++){
-	      var nom_produit = articles[products[i].article].nom,
-	      	  quantite_produit = products[i].quantite,
-	      	  total_temp = Math.round(100*articles[products[i].article].prix*products[i].quantite)/100,
-	      	  espace_dizaine = quantite > 9 == 0 ? 0 : 1,
-	      	  total += total_temp;
-	     	
-	      txt += quantite + "*" + nom + " ".repeat(40 - nom.length - espace_dizaine) + "->   " + total_temp + "€";
-	      txt += newline;
+      var nom_produit = articles[products[i].article].nom,
+      	  quantite_produit = products[i].quantite,
+      	  total_temp = Math.round(100*articles[products[i].article].prix*products[i].quantite)/100,
+      	  espace_dizaine = quantite > 9 == 0 ? 0 : 1,
+      	  total = total + total_temp;
+     	
+      txt += quantite + "*" + nom + " ".repeat(40 - nom.length - espace_dizaine) + "->   " + total_temp + "€";
+      txt += newline;
     }
 	
     var taille_total = total.toLocaleString().length,
