@@ -151,7 +151,7 @@ POSS.getBuyerInfo_result = function(r){
     +"Solde : "+formatEuros(r.success.solde/100)
     +"<br /><button class=\"btn btn-primary btn-large\" onclick=\"PRINTER.Solde("+r.success.solde+",'"
     +r.success.firstname+"','"+r.success.lastname+"');\"> Imprimer </button>"
-    +" <button class=\"btn btn-primary btn-large\" onclick=\"alert('TODO');\"> Annulation </button>);
+    +" <button class=\"btn btn-primary btn-large\" onclick=\"alert('TODO');\"> Annulation </button>");
     $("#BuyerInfo").modal();
     restore();
   }
