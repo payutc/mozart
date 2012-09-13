@@ -79,6 +79,7 @@ PRINTER.Solde = function(solde, firstname, lastname) {
 	txt += nom_prenom;
 	txt += newline;
 	txt += "Vous n'avez plu que " + solde;
+	txt += newline.repeat(5);
 
 	PRINTER.print(txt);
 
