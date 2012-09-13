@@ -63,7 +63,8 @@ POSS.getSellerIdentity = function(r){
 }
 
 POSS.logout = function(){
-  doRequest("logout", {}, function(r){ window.location = r.url; });
+  var service = [location.protocol, '//', location.host, location.pathname].join('');
+  doRequest("logout", {}, function(r){ window.location = r.url+"?service="+service; });
 }
 
 POSS.getArticless = function(r){
