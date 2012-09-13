@@ -133,7 +133,7 @@ POSS.transaction = function(badge){
 POSS.transaction_result = function(r){
     if(r.success) {
       // PRINT TICKET
-      PRINTER.ticket(lignes, r.success);
+      PRINTER.Ticket(lignes, r.success);
       $("#status").html("Paiement réussi !").effect("highlight", {color: "#00CC00"}, 1500, restore);
     } else
       $("#status").html("Erreur n°"+r.error+"<br />"+r.error_msg).effect("highlight", {color: "#FF0000"}, 1500, restore);
