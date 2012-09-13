@@ -78,7 +78,7 @@ PRINTER.Solde = function(solde, firstname, lastname) {
 
 	txt += nom_prenom;
 	txt += newline;
-	txt += "Vous n'avez plus que " + solde / 100 "€.";
+	txt += "Vous n'avez plus que " + solde / 100 + "€.";
 	txt += newline.repeat(5);
 
 	PRINTER.print(txt);
