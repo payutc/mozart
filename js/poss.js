@@ -147,12 +147,15 @@ POSS.getBuyerInfo = function(badge){
 
 POSS.getBuyerInfo_result = function(r){
   if(r.success){
-    //PRINTER.Solde(r.success.solde, r.success.firstname, r.success.lastname);
+    annulation = "";
+    for(var i=0;i<r.success.last_purchase.length;i++){
+      annulation += "<button class=\"btn btn-large btn-danger\" onclick=\"alert('r.success.last_purchase[i].pur_id');\"> Annuler un "+articles[r.success.last_purchase[i].obj_id].name+"</button><br />";
+    }
     $("#infodata").html("Utilisateur : "+r.success.firstname+" "+r.success.lastname+"<br />"
     +"Solde : "+formatEuros(r.success.solde/100)
     +"<br /><button class=\"btn btn-primary btn-large\" onclick=\"PRINTER.Solde("+r.success.solde+",'"
-    +r.success.firstname+"','"+r.success.lastname+"');\"> Imprimer </button>"
-    +" <button class=\"btn btn-primary btn-large\" onclick=\"alert('TODO');\"> Annulation </button>");
+    +r.success.firstname+"','"+r.success.lastname+"');\"> Imprimer </button><br />"
+    +annulation);
     $("#BuyerInfo").modal();
     restore();
   }
