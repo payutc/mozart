@@ -148,7 +148,7 @@ POSS.getBuyerInfo = function(badge){
 POSS.getBuyerInfo_result = function(r){
   if(r.success){
     var annulation = "";
-    alert(r.success.last_purchase.length);
+    alert(r.success.last_purchase);
     for(var i=0;i<r.success.last_purchase.length;i++){
       alert("test");
       annulation += "<button class=\"btn btn-large btn-danger\" onclick=\"alert('r.success.last_purchase[i].pur_id');\"> Annuler un "+articles[r.success.last_purchase[i].obj_id].name+"</button><br />";
