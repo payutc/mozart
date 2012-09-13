@@ -69,10 +69,13 @@ PRINTER.entete = " ".repeat(25 - PRINTER.titre.length/2) + "\x1B\x21\x02" + PRIN
 
 PRINTER.Solde = function(solde, firstname, lastname) {
 	var txt = "", 
-		newline = PRINTER.newline;
+		newline = PRINTER.newline,
+		date = PRINTER.get_date();
 	
 	txt += PRINTER.entete;
 	txt += newline.repeat(2);
+	txt += date;
+	txt ++ newline.repeat(2);
 
 	var nom_prenom = firstname + " " + lastname;
 
