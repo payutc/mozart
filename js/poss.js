@@ -62,9 +62,13 @@ POSS.getSellerIdentity = function(r){
   }
 }
 
+POSS.logout = function(){
+  doRequest("logout", {}, function(r){ window.location = r.url; });
+}
+
 POSS.getArticless = function(r){
   if(r.success){
-    $("#seller").html(r.success.firstname+" "+r.success.lastname);
+    $("#seller").html(r.success.firstname+" "+r.success.lastname+" <button class=\"btn btn-danger\" onclick=\"POSS.logout();\">Deconnexion</button>");
 
     doRequest("getArticles", {}, POSS.getArticless_result);
   }
@@ -146,7 +150,8 @@ POSS.getBuyerInfo_result = function(r){
     $("#infodata").html("Utilisateur : "+r.success.firstname+" "+r.success.lastname+"<br />"
     +"Solde : "+formatEuros(r.success.solde/100)
     +"<br /><button class=\"btn btn-primary btn-large\" onclick=\"PRINTER.Solde("+r.success.solde+",'"
-    +r.success.firstname+"','"+r.success.lastname+"');\"> Imprimer </button>");
+    +r.success.firstname+"','"+r.success.lastname+"');\"> Imprimer </button>"
+    +" <button class=\"btn btn-primary btn-large\" onclick=\"alert('TODO');\"> Annulation </button>);
     $("#BuyerInfo").modal();
     restore();
   }
