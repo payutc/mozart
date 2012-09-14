@@ -102,9 +102,7 @@ PRINTER.Ticket = function(products, infos) {
 	txt += newline.repeat(2);
 	txt += nom_prenom;
 	txt += newline.repeat(2);
-
-	products = produits_fake;
-
+	
 	for(var i=0;i<products.length;i++){
       var nom_produit = articles[products[i].article].nom,
       	  quantite_produit = products[i].quantite,
