@@ -108,7 +108,7 @@ PRINTER.Ticket = function(products, infos) {
       	  espace_dizaine = quantite_produit > 9 == 0 ? 0 : 1,
       	  total = total + total_temp;
      	
-      txt += quantite_produit + "*" + nom + " ".repeat(40 - nom.length - espace_dizaine) + "->   " + total_temp + "€";
+      txt += quantite_produit + "*" + nom + " ".repeat(40 - nom_produit.length - espace_dizaine) + "->   " + total_temp + "€";
       txt += newline;
     }
 	
