@@ -42,8 +42,6 @@ var code = {
 PRINTER.Init = "\x1B\x40";
 PRINTER.Cut = "\x1D\x56\x41";
 
-matt = {firstname : "Patrick", lastname : "Browne", solde : 1000000}
-
 //helper
 PRINTER.cc = function(line, newline) {
 	return $("<div>").addClass("newLine")
@@ -107,10 +105,10 @@ PRINTER.Ticket = function(products, infos) {
       var nom_produit = articles[products[i].article].nom,
       	  quantite_produit = products[i].quantite,
       	  total_temp = Math.round(100*articles[products[i].article].prix*products[i].quantite)/100,
-      	  espace_dizaine = quantite > 9 == 0 ? 0 : 1,
+      	  espace_dizaine = quantite_produit > 9 == 0 ? 0 : 1,
       	  total = total + total_temp;
      	
-      txt += quantite + "*" + nom + " ".repeat(40 - nom.length - espace_dizaine) + "->   " + total_temp + "€";
+      txt += quantite_produit + "*" + nom + " ".repeat(40 - nom.length - espace_dizaine) + "->   " + total_temp + "€";
       txt += newline;
     }
 	

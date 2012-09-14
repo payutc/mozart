@@ -154,12 +154,12 @@ POSS.getBuyerInfo_result = function(r){
   if(r.success){
     var annulation = "";
     for(var pur_id in r.success.last_purchase){
-      annulation += "<br /><button class=\"btn btn-large btn-danger\" onclick=\"POSS.cancel("+pur_id+");\"> Annuler un "+articles[r.success.last_purchase[pur_id].obj_id].nom+" à "+articles[r.success.last_purchase[pur_id].obj_id].prix+"€</button><br />";
+      annulation += "<div id=\"pur_"+pur_id+"\" ><br /><button class=\"btn btn-large btn-danger\" onclick=\"POSS.cancel("+pur_id+");\"> Annuler un "+articles[r.success.last_purchase[pur_id].obj_id].nom+" à "+articles[r.success.last_purchase[pur_id].obj_id].prix+"€</button><br /></div>";
     }
     $("#infodata").html("Utilisateur : "+r.success.firstname+" "+r.success.lastname+"<br />"
     +"Solde : "+formatEuros(r.success.solde/100)
-    +"<div id=\"pur_"+pur_id+"\" ><br /><button class=\"btn btn-primary btn-large\" onclick=\"PRINTER.Solde("+r.success.solde+",'"
-    +r.success.firstname+"','"+r.success.lastname+"');\"> Imprimer </button><br /></div>"
+    +"<br /><button class=\"btn btn-primary btn-large\" onclick=\"PRINTER.Solde("+r.success.solde+",'"
+    +r.success.firstname+"','"+r.success.lastname+"');\"> Imprimer </button><br />"
     +annulation);
     $("#BuyerInfo").modal();
     restore();
