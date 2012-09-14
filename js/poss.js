@@ -148,10 +148,8 @@ POSS.getBuyerInfo = function(badge){
 POSS.getBuyerInfo_result = function(r){
   if(r.success){
     var annulation = "";
-    alert(r.success.last_purchase);
     for(var pur_id in r.success.last_purchase){
-      alert(pur_id);
-      annulation += "<button class=\"btn btn-large btn-danger\" onclick=\"alert('r.success.last_purchase[i].pur_id');\"> Annuler un "+articles[r.success.last_purchase[i].obj_id].name+"</button><br />";
+      annulation += "<button class=\"btn btn-large btn-danger\" onclick=\"alert('"+pur_id+"');\"> Annuler un "+articles[r.success.last_purchase[i].obj_id].name+"</button><br />";
     }
     alert(annulation);
     $("#infodata").html("Utilisateur : "+r.success.firstname+" "+r.success.lastname+"<br />"
