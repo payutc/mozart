@@ -146,7 +146,7 @@ POSS.getBuyerInfo = function(badge){
 }
 
 POSS.cancel = function(pur_id){
-  doRequest('cancel', {purchase_id: pur_id}, POSS.getBuyerInfo_result);
+  doRequest('cancel', {purchase_id: pur_id}, function(){ $("#pur_"+pur_id).hide(); });
 }
 
 
@@ -158,8 +158,8 @@ POSS.getBuyerInfo_result = function(r){
     }
     $("#infodata").html("Utilisateur : "+r.success.firstname+" "+r.success.lastname+"<br />"
     +"Solde : "+formatEuros(r.success.solde/100)
-    +"<br /><button class=\"btn btn-primary btn-large\" onclick=\"PRINTER.Solde("+r.success.solde+",'"
-    +r.success.firstname+"','"+r.success.lastname+"');\"> Imprimer </button><br />"
+    +"<div id=\"pur_"+pur_id+"\ >"<br /><button class=\"btn btn-primary btn-large\" onclick=\"PRINTER.Solde("+r.success.solde+",'"
+    +r.success.firstname+"','"+r.success.lastname+"');\"> Imprimer </button><br /></div>"
     +annulation);
     $("#BuyerInfo").modal();
     restore();
