@@ -149,9 +149,8 @@ POSS.getBuyerInfo_result = function(r){
   if(r.success){
     var annulation = "";
     for(var pur_id in r.success.last_purchase){
-      annulation += "<button class=\"btn btn-large btn-danger\" onclick=\"alert('"+pur_id+"');\"> Annuler un "+articles[r.success.last_purchase[pur_id].obj_id].name+" "+r.success.last_purchase[pur_id].obj_id+"</button><br />";
+      annulation += "<br /><button class=\"btn btn-large btn-danger\" onclick=\"alert('"+pur_id+"');\"> Annuler un "+articles[r.success.last_purchase[pur_id].obj_id].nom+" à "+articles[r.success.last_purchase[pur_id].obj_id].prix+"€</button><br />";
     }
-    alert(annulation);
     $("#infodata").html("Utilisateur : "+r.success.firstname+" "+r.success.lastname+"<br />"
     +"Solde : "+formatEuros(r.success.solde/100)
     +"<br /><button class=\"btn btn-primary btn-large\" onclick=\"PRINTER.Solde("+r.success.solde+",'"
