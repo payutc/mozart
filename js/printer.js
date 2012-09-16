@@ -101,7 +101,7 @@ PRINTER.Solde = function(solde, firstname, lastname) {
 
 }
 
-PRINTER.center(txt, taille) {
+PRINTER.center = function(txt, taille) {
 	return " ".repeat(taille/2 - txt.length/2) + txt;
 }
 
