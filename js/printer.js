@@ -109,7 +109,7 @@ PRINTER.Ticket = function(products, infos) {
 	var newline = PRINTER.newline,
 		date = PRINTER.get_date(),
 		nom_prenom = infos.firstname + " " + infos.lastname,
-		msg_perso = infos.msg_perso.wordWrap(50, "\n", 0).split("\n"),
+		msg_perso = infos.msg_perso,
 		entete = PRINTER.entete,
 		total = 0,
 		txt = [];
@@ -144,8 +144,18 @@ PRINTER.Ticket = function(products, infos) {
 	txt += PRINTER.center("---", 54)
 	txt += newline;
 
+	msg_perso = msg_perso.wordWrap(50, "\n", 0)
+					.split("\n")
+	
+	console.log(msg_perso);
+	
+	msg_perso = msg_perso.map(function(x) { return PRINTER.center(x, 50); })
 
-	txt += msg_perso.map(function(x) { return PRINTER.center(x, 50); }).join(newline);
+	console.log(msg_perso)
+
+	msg_perso = msg_perso.join(newline); 
+	
+	txt += msg_perso;
 	txt += newline;
 	console.log(txt);
 	PRINTER.print(txt);
