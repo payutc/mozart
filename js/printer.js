@@ -90,6 +90,7 @@ PRINTER.Ticket = function(products, infos) {
 	var newline = PRINTER.newline,
 		date = PRINTER.get_date(),
 		nom_prenom = infos.firstname + " " + infos.lastname,
+		msg_perso = infos.msg_perso,
 		entete = PRINTER.entete,
 		total = 0,
 		txt = [];
@@ -121,6 +122,7 @@ PRINTER.Ticket = function(products, infos) {
 	txt += newline;
 	txt += infos;
 	txt += newline;
+	txt += msg_perso;
 
 	PRINTER.print(txt);
 }
