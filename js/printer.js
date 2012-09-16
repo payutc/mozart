@@ -3,6 +3,21 @@ String.prototype.repeat = function( num )
     return new Array( num + 1 ).join( this );
 }
 
+
+//+ Jonas Raoni Soares Silva
+//@ http://jsfromhell.com/string/wordwrap [rev. #2]
+
+String.prototype.wordWrap = function(m, b, c){
+    var i, j, l, s, r;
+    if(m < 1)
+        return this;
+    for(i = -1, l = (r = this.split("\n")).length; ++i < l; r[i] += s)
+        for(s = r[i], r[i] = ""; s.length > m; r[i] += s.slice(0, j) + ((s = s.slice(j)).length ? b : ""))
+            j = c == 2 || (j = s.slice(0, m + 1).match(/\S*(\s)?$/))[1] ? m : j.input.length - j[0].length
+            || c == 1 && m || j.input.length + (j = s.slice(m).match(/^\S*/)).input.length;
+    return r.join("\n");
+};
+
 var PRINTER = {};
 
 function chr(i) {
@@ -86,11 +101,15 @@ PRINTER.Solde = function(solde, firstname, lastname) {
 
 }
 
+PRINTER.center(txt, taille) {
+	return " ".repeat(taille/2 - txt.length/2) + txt;
+}
+
 PRINTER.Ticket = function(products, infos) {	
 	var newline = PRINTER.newline,
 		date = PRINTER.get_date(),
 		nom_prenom = infos.firstname + " " + infos.lastname,
-		msg_perso = infos.msg_perso,
+		msg_perso = infos.msg_perso.wordWrap(50, "\n", 0).split("\n"),
 		entete = PRINTER.entete,
 		total = 0,
 		txt = [];
@@ -122,7 +141,11 @@ PRINTER.Ticket = function(products, infos) {
 	txt += newline;
 	txt += infos;
 	txt += newline;
-	txt += msg_perso;
+	txt += PRINTER.center("---", 54)
+	txt += newline;
+
+
+	txt += msg_perso.map(function(x) { return PRINTER.center(x, 50); }).join(newline);
 	txt += newline;
 	console.log(txt);
 	PRINTER.print(txt);
