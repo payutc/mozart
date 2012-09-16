@@ -79,7 +79,7 @@ PRINTER.Solde = function(solde, firstname, lastname) {
 
 	txt += nom_prenom;
 	txt += newline;
-	txt += "Vous n'avez plus que " + solde / 100 + "€.";
+	txt += "Vous avez " + solde / 100 + "€ sur votre compte.";
 	txt += newline.repeat(5);
 
 	PRINTER.print(txt);
@@ -122,9 +122,9 @@ PRINTER.Ticket = function(products, infos) {
 	txt += newline;
 	txt += infos;
 	txt += newline;
-//	txt += msg_perso;
-//	txt += newline;
-
+	txt += msg_perso;
+	txt += newline;
+	console.log(txt);
 	PRINTER.print(txt);
 }
 
