@@ -122,6 +122,7 @@ PRINTER.Ticket = function(products, infos) {
 	txt += newline;
 	txt += infos;
 	txt += newline;
+	console.log(msg_perso)
 	txt += msg_perso;
 
 	PRINTER.print(txt);
