@@ -102,7 +102,7 @@ PRINTER.Solde = function(solde, firstname, lastname) {
 }
 
 PRINTER.center = function(txt, taille) {
-	return " ".repeat(taille/2 - txt.length/2) + txt;
+	return " ".repeat(Math.round(taille/2 - txt.length/2) + txt;
 }
 
 PRINTER.Ticket = function(products, infos) {	
