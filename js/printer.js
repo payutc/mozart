@@ -146,14 +146,8 @@ PRINTER.Ticket = function(products, infos) {
 
 	msg_perso = msg_perso.wordWrap(50, "\n", 0)
 					.split("\n")
-	
-	console.log(msg_perso);
-	
-	msg_perso = msg_perso.map(function(x) { return PRINTER.center(x, 50); })
-
-	console.log(msg_perso)
-
-	msg_perso = msg_perso.join(newline); 
+					.map(function(x) { return PRINTER.center(x, 54); })
+				    .join(newline); 
 	
 	txt += msg_perso;
 	txt += newline;
