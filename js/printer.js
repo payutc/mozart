@@ -101,15 +101,15 @@ PRINTER.Solde = function(solde, firstname, lastname) {
 
 }
 
-PRINTER.center(txt, taille) {
-	return " ".repeat(taille/2 - txt.length/2) + txt;
+PRINTER.center = function(txt, taille) {
+	return " ".repeat(Math.round(taille/2 - txt.length/2)) + txt;
 }
 
-PRINTER.Ticket = function(products, infos) {	
+PRINTER.Ticket = function(products, infos) {
 	var newline = PRINTER.newline,
 		date = PRINTER.get_date(),
 		nom_prenom = infos.firstname + " " + infos.lastname,
-		msg_perso = infos.msg_perso.wordWrap(50, "\n", 0).split("\n"),
+		msg_perso = infos.msg_perso,
 		entete = PRINTER.entete,
 		total = 0,
 		txt = [];
@@ -144,8 +144,12 @@ PRINTER.Ticket = function(products, infos) {
 	txt += PRINTER.center("---", 54)
 	txt += newline;
 
-
-	txt += msg_perso.map(function(x) { return PRINTER.center(x, 50); }).join(newline);
+	msg_perso = msg_perso.wordWrap(50, "\n", 0)
+					.split("\n")
+					.map(function(x) { return PRINTER.center(x, 54); })
+				    .join(newline); 
+	
+	txt += msg_perso;
 	txt += newline;
 	console.log(txt);
 	PRINTER.print(txt);
