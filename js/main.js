@@ -3,7 +3,7 @@ var articles;
 
 var lignes = [];
 var nbBoutons = 25;
-var nbCategories = 4;
+var nbCategories = 5;
 var activeCategorie = 0;
 
 var soapurl = {
