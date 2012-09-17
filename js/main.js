@@ -2,7 +2,7 @@ var categories;
 var articles;
 
 var lignes = [];
-var nbBoutons = 25;
+var nbBoutons = 30;
 var nbCategories = 5;
 var activeCategorie = 0;
 
