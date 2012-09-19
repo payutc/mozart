@@ -47,8 +47,15 @@ function showButtons(categorie){
     
     for(i=0;i<nbBoutons;i++){
         var aid = categories[categorie].articles[i];
-        if(aid != 0 && articles[aid])
-            $("#tableau-articles button:eq("+i+")").html(articles[aid].nom).attr("aid", aid).removeAttr("disabled");
+        if(aid != 0 && articles[aid]) {
+            $button = $("#tableau-articles button:eq("+i+")");
+            $button.html(articles[aid].nom).attr("aid", aid).removeAttr("disabled");
+            if (localStorage["background_" + aid])
+                $button.css("background", localStorage["background_" + aid])
+            if (localStorage["text_" + aid])
+                $button.css("color", localStorage["text_" + aid])
+
+        }
         else
             $("#tableau-articles button:eq("+i+")").html("").removeAttr("aid").attr("disabled", "disabled");
     }
