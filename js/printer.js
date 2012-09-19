@@ -133,7 +133,7 @@ PRINTER.Ticket = function(products, infos) {
     }
 	
     var taille_total = total.toLocaleString().length,
-    	total = " ".repeat(43 - taille_total) + "Total : " + total + "€",
+    	total = " ".repeat(43 - taille_total) + "Total : " + Math.round(100*total)/100 + "€",
 		infos = " Il vous reste "+infos.solde/100+" € sur votre compte.";
 
 	txt += newline;
