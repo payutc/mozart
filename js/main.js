@@ -52,8 +52,12 @@ function showButtons(categorie){
             $button.html(articles[aid].nom).attr("aid", aid).removeAttr("disabled");
             if (localStorage["background_" + aid])
                 $button.css("background", localStorage["background_" + aid])
+            else
+                $button.css("background", "")
             if (localStorage["text_" + aid])
                 $button.css("color", localStorage["text_" + aid])
+            else
+                $button.css("color", "")
 
         }
         else
