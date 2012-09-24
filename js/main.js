@@ -46,22 +46,39 @@ function showButtons(categorie){
     }
     
     for(i=0;i<nbBoutons;i++){
-        var aid = categories[categorie].articles[i];
+        var aid = categories[categorie].articles[i],
+             $button = $("#tableau-articles button:eq("+i+")");
+        
         if(aid != 0 && articles[aid]) {
-            $button = $("#tableau-articles button:eq("+i+")");
-            $button.html(articles[aid].nom).attr("aid", aid).removeAttr("disabled");
-            if (localStorage["background_" + aid])
-                $button.css("background", localStorage["background_" + aid])
-            else
-                $button.css("background", "")
+            $button.html(articles[aid].nom)
+                   .attr("aid", aid)
+                   .removeAttr("disabled");
+            
+            $button.css("font-size", "")
+            if (localStorage["backgroundimg_" + aid]) {
+                $button.css("background", "no-repeat center center url(" + localStorage["backgroundimg_" + aid] + ")");
+                $button.css("background-size", "cover")
+                $button.css("font-size", "0")
+            }
+            else {
+                if (localStorage["background_" + aid]) {
+                    $button.css("background", localStorage["background_" + aid])
+                }
+                else
+                    $button.css("background", "")
+            }
             if (localStorage["text_" + aid])
                 $button.css("color", localStorage["text_" + aid])
             else
                 $button.css("color", "")
 
         }
-        else
-            $("#tableau-articles button:eq("+i+")").html("").removeAttr("aid").attr("disabled", "disabled");
+        else {
+            $button.html("")
+                   .removeAttr("aid")
+                   .attr("disabled", "disabled")
+                   .css("background", "");
+        }
     }
 }
 
@@ -142,20 +159,8 @@ function doRequest(method, data, callback){
   $.post(soapurl.poss+"?method="+method, data, callback, 'json');
 }
 
-$(document).ready(function(){
-    // Mise à jour d l'heure
-    window.setInterval(function(){
-        var dt = new Date();
-        $("#time").html(dt.toLocaleTimeString());
-    }, 1000);
-    
-    // Clic sur les boutons de catégories
-    $("#tableau-categories button").click(function(){
-        showButtons($(this).attr("catid"));
-    });
-    
-    // Clic sur les boutons d'articles
-    $("#tableau-articles button").click(function(){
+
+var click_article = function(){
         var aid = $(this).attr("aid");
         for(i=0;i<lignes.length;i++){
             if(lignes[i].article == aid){
@@ -168,8 +173,32 @@ $(document).ready(function(){
            article: aid,
            quantite: 1
         });
-        updateLignes();
-    });
+            updateLignes();
+    },
+    click_category = function() {
+        showButtons($(this).attr("catid"));
+    };
+    // admin = true;
+    // if (admin)
+    //     var click_article = function() {
+    //         var aid = $(this).attr("aid"),
+    //             data = prompt("data base 64 ?");
+    //         if (data)
+    //             localStorage["backgroundimg_" + aid] = data; 
+    //     }
+
+$(document).ready(function(){
+    // Mise à jour d l'heure
+    window.setInterval(function(){
+        var dt = new Date();
+        $("#time").html(dt.toLocaleTimeString());
+    }, 1000);
+    
+    // Clic sur les boutons de catégories
+    $("#tableau-categories button").click(click_category);
+    
+    // Clic sur les boutons d'articles
+    $("#tableau-articles button").click(click_article);
     
     // Clic sur effacer tout
     $("#effacertout").click(function(){
@@ -194,6 +223,16 @@ function liste_articles() {
     doRequest("getArticles", {}, liste_articles_res);
 }
 
+var export_localStorage = function() {
+    return JSON.stringify(localStorage)
+},
+    import_localStorage = function(ls) {
+        ls = JSON.parse(ls);
+        for (key in ls) {
+            localStorage[key] = ls[key];
+        }
+    }
+
 function liste_articles_res(res) {
     if (res.success) {
         articles = res.success.articles
@@ -203,7 +242,7 @@ function liste_articles_res(res) {
     }
 
     $articles = $("#articles");
-    $article = $("<div class='span3 article'><div class='nom_article'></div><div class='couleur'></div><div class='test'><button class='btn'></button></div></div>");
+    $article = $("<div class='article'><div class='nom_article'></div><div class='couleur'></div><div class='test'><button class='btn'></button></div><div class='visibility'><input type='checkbox'/></div></div>");
     $background_colorpicker = $('<div class="input-append color" data-color="#FFFFFF" data-color-format="hex"><input type="text" class="span2" value="" ><span class="add-on"><i style="background-color: rgb(255, 146, 180)"></i></span></div>');
 
     if (!localStorage["couleurs_articles"]) 
@@ -213,11 +252,9 @@ function liste_articles_res(res) {
         $button = $("button", "#article_" + id_article);
         if (localStorage["background_" + id_article]) {
             $button.css("background", localStorage["background_" + id_article]);
-            console.log("pop")
         }
         if (localStorage["text_" + id_article])
             $button.css("color", localStorage["text_" + id_article]);
-        console.log($button)
     }
 
     change_color_ev = function(which) {
@@ -228,15 +265,34 @@ function liste_articles_res(res) {
 
         }
     }
+
+    checkbox_ev = function(ev) {
+        var id_article = ev.currentTarget.parentElement.parentElement.id.replace("article_", "");
+        toggle_visibility(id_article)
+    }
+
+    toggle_visibility = function(id_article) {
+        localStorage["visibility_" + id_article] = !localStorage["visibility_" + id_article];
+        console.log(localStorage["visibility_" + id_article]);
+        //$("input[type='checkbox']", "#article_" + id_article).attr("checked", localStorage["visibility_" + article.id] ? "checked" : "")
+    }
     
     var background_change_color_ev = change_color_ev("background"),
         text_change_color_ev = change_color_ev("text");
 
+    
     for (article in articles) {
+        
         var article = articles[article],
             $new_article = $article.clone();
         
+        if (localStorage["visibility_" + article.id] == undefined ) 
+            localStorage["visibility_" + article.id] = true;
+
         $articles.append($new_article);
+
+        $("input[type='checkbox']", $new_article).click(checkbox_ev).attr("checked", localStorage["visibility_" + article.id] ? "checked" : "")
+
         $new_article.attr("id", "article_" + article.id);
         $(".nom_article", $new_article).text(article.name);
         $(".test button", $new_article).text(article.name);
@@ -247,7 +303,7 @@ function liste_articles_res(res) {
         //on remplit les champs si ya deja des couleurs dans le localStorage
         if (localStorage["background_" + article.id]) {
             $background_cp.attr("data-color", localStorage["background_" + article.id])
-            $("input", $background_cp).attr("value", localStorage["background_" + article.id])
+            $("input.span2", $background_cp).attr("value", localStorage["background_" + article.id])
             $("button", $new_article).css("background", localStorage["background_" + article.id]);
         }
         
@@ -270,4 +326,11 @@ function liste_articles_res(res) {
 
 
     }
+
+        $('#articles').masonry({
+    // options
+      itemSelector : '.article',
+      columnWidth : 20
+      });
 }
+
