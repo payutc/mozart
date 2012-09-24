@@ -178,15 +178,21 @@ var click_article = function(){
     click_category = function() {
         showButtons($(this).attr("catid"));
     };
-    // admin = true;
-    // if (admin)
-    //     var click_article = function() {
-    //         var aid = $(this).attr("aid"),
-    //             data = prompt("data base 64 ?");
-    //         if (data)
-    //             localStorage["backgroundimg_" + aid] = data; 
-    //     }
 
+set_admin = function() {
+    var click_article = function() {
+        var aid = $(this).attr("aid"),
+            data = prompt("data base 64 ?");
+        if (data) {
+            localStorage["backgroundimg_" + aid] = data;
+            $button = $("button[aid=" + aid + "]");
+            $button.css("background", "no-repeat center center url(" + localStorage["backgroundimg_" + aid] + ")");
+            $button.css("background-size", "cover")
+            $button.css("font-size", "0")
+        }
+    }
+    $("#tableau-articles button").click(click_article);
+}
 $(document).ready(function(){
     // Mise à jour d l'heure
     window.setInterval(function(){
