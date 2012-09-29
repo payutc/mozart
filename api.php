@@ -1,6 +1,6 @@
 <?php
 
-include 'config.dist.php';
+include 'config.php';
 session_start();
 
 $POSS = new SoapClient($_CONF['soap_url'].'POSS2.class.php?wsdl');
