@@ -73,7 +73,7 @@ POSS.logout = function(){
 
 POSS.getArticless = function(r){
   if(r.success){
-    $("#seller").html(r.success.firstname+" "+r.success.lastname+" <button class=\"btn btn-danger\" onclick=\"POSS.logout();\">Deconnexion</button>");
+    $("#seller").html(r.success.firstname+" "+r.success.lastname);
 
     doRequest("getArticles", {}, POSS.getArticless_result);
   }
