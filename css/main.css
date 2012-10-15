@@ -58,3 +58,8 @@ body {
 #applet {
   margin-top: 400px;
 }
+
+#btnlogout {
+  margin-top: -3px;
+  margin-left: 10px;
+}
