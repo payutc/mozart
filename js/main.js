@@ -212,6 +212,11 @@ $(document).ready(function(){
        updateLignes(); 
     });
     
+    // Clic sur déconnexion
+    $("#btnlogout").click(function(){
+      POSS.logout();
+    });
+    
     // Remise à zéro de la caisse
     restore();
     
