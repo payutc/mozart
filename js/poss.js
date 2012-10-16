@@ -122,25 +122,36 @@ POSS.getArticless_result = function(r){
 
 
 POSS.transaction = function(badge){
-    var csvArticles = "";
-    for(var i=0;i<lignes.length;i++){
-      for(var j=0;j<lignes[i].quantite;j++)
-        csvArticles = csvArticles + lignes[i].article + " "; 
-    }
+    if(!transactionInProgress){
+        transactionInProgress = true;
+        var csvArticles = "";
+        for(var i=0;i<lignes.length;i++){
+          for(var j=0;j<lignes[i].quantite;j++)
+            csvArticles = csvArticles + lignes[i].article + " "; 
+        }
 
-    doRequest("transaction", {
-        badge_id: badge,
-        obj_ids: csvArticles},
-      POSS.transaction_result);
+        doRequest("transaction", {
+            badge_id: badge,
+            obj_ids: csvArticles},
+          POSS.transaction_result); 
+    }
 }
 
 POSS.transaction_result = function(r){
     if(r.success) {
       // PRINT TICKET
       PRINTER.Ticket(lignes, r.success);
-      $("#status").html("Paiement réussi !").effect("highlight", {color: "#00CC00"}, 500, restore);
-    } else
-      $("#status").html("Erreur n°"+r.error+"<br />"+r.error_msg).effect("highlight", {color: "#FF0000"}, 1500, restore);
+      restore();
+      $("#status").html("Paiement réussi !").effect("highlight", {color: "#00CC00"}, 1000, function(){
+        $("#status").html("Passer un badge pour valider");
+      });
+    }
+    else {
+      restore();
+      $("#status").html("Erreur n°"+r.error+"<br />"+r.error_msg).effect("highlight", {color: "#FF0000"}, 1500, function(){
+        $("#status").html("Passer un badge pour valider");
+      });
+    }
 }
 
 POSS.getBuyerInfo = function(badge){
