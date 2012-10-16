@@ -20,16 +20,20 @@ POSS.isLoadedSeller_result = function(r){
     }
     else {
       // Envoi vers le CAS
-      doRequest("getCasUrl", {}, POSS.casUrlReceived);
+      var service = [location.protocol, '//', location.host, location.pathname].join('');
+      var url = jQuery.param.querystring(casUrl+'login', 'service='+service); // TODO ajouter /login à l'url
+      window.location = url;
     }
   }
 }
 
 POSS.casUrlReceived = function(r){
   if(r.success){
-    var service = [location.protocol, '//', location.host, location.pathname].join('');
-    var url = jQuery.param.querystring(r.success+'login', 'service='+service); // TODO ajouter /login à l'url
-    window.location = url; 
+    // Sauvegarde de l'url
+    casUrl = r.success;
+    
+    // La suite : connexion du vendeur
+    POSS.isLoadedSeller();
   }
 }
 
@@ -67,8 +71,9 @@ POSS.getSellerIdentity = function(r){
 POSS.logout = function(){
   var service = [location.protocol, '//', location.host, location.pathname].join('');
   doRequest("logout", {}, function(r){ 
-      var url = jQuery.param.querystring(r.url, 'service='+service);
-      window.location = url+"?service="+service; });
+      var url = jQuery.param.querystring(casUrl+'logout', 'service='+service);
+      window.location = url;
+  });
 }
 
 POSS.getArticless = function(r){
