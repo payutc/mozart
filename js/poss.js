@@ -122,16 +122,19 @@ POSS.getArticless_result = function(r){
 
 
 POSS.transaction = function(badge){
-    var csvArticles = "";
-    for(var i=0;i<lignes.length;i++){
-      for(var j=0;j<lignes[i].quantite;j++)
-        csvArticles = csvArticles + lignes[i].article + " "; 
-    }
+    if(!transactionInProgress){
+        transactionInProgress = true;
+        var csvArticles = "";
+        for(var i=0;i<lignes.length;i++){
+          for(var j=0;j<lignes[i].quantite;j++)
+            csvArticles = csvArticles + lignes[i].article + " "; 
+        }
 
-    doRequest("transaction", {
-        badge_id: badge,
-        obj_ids: csvArticles},
-      POSS.transaction_result);
+        doRequest("transaction", {
+            badge_id: badge,
+            obj_ids: csvArticles},
+          POSS.transaction_result); 
+    }
 }
 
 POSS.transaction_result = function(r){

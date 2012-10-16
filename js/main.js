@@ -6,6 +6,8 @@ var nbBoutons = 30;
 var nbCategories = 5;
 var activeCategorie = 0;
 
+var transactionInProgress = false;
+
 var soapurl = {
     poss: "api.php"
 };
@@ -111,6 +113,7 @@ function restore(){
     lignes.length = 0;
     updateLignes();
     $("#status").html("Passer un badge pour valider");
+    transactionInProgress = false;
 }
 
 function formatEuros(montant){
