@@ -62,19 +62,26 @@ PRINTER.cc = function(line, newline) {
 	return $("<div>").addClass("newLine")
 				     .addClass("dPrint").text(line)	
 }
+//helper
+fmt_number = function(number) {
+    if (number >= 10)
+        return number.toString();
+    else
+        return "0" + number.toString();
+}
 
 PRINTER.get_date = function() {
-	var dateString = "";
-	var newDate = new Date();
-	dateString += "le "
-	dateString += newDate.getDate() + "/";
- 	dateString += (newDate.getMonth() + 1) + "/";
-	dateString += newDate.getFullYear() + " à ";
-	dateString += newDate.getHours() + ":";
-	dateString += newDate.getMinutes() + ":";
-	dateString += newDate.getSeconds();
+	  var dateString = "";
+	  var newDate = new Date();
+	  dateString += "le "
+	  dateString += fmt_number(newDate.getDate()) + "/";
+ 	  dateString += fmt_number(newDate.getMonth() + 1) + "/";
+	  dateString += newDate.getFullYear() + " à ";
+	  dateString += fmt_number(newDate.getHours()) + ":";
+	  dateString += fmt_number(newDate.getMinutes()) + ":";
+	  dateString += fmt_number(newDate.getSeconds());
 
-	return dateString;
+	  return dateString;
 }
 PRINTER.newline = chr(10);
 PRINTER.titre = "PICASSO - FOYER ETUDIANT";
