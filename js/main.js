@@ -6,6 +6,8 @@ var nbBoutons = 30;
 var nbCategories = 5;
 var activeCategorie = 0;
 
+var transactionInProgress = false;
+
 var soapurl = {
     poss: "api.php"
 };
@@ -111,7 +113,11 @@ function updateLignes(){
 function restore(){
     lignes.length = 0;
     updateLignes();
-    $("#status").html("Passer un badge pour valider");
+    transactionInProgress = false;
+}
+
+function waitBadge(){
+    $("#status").html("Passer un badge pour valider");  
 }
 
 function formatEuros(montant){
@@ -157,9 +163,8 @@ function updateJS(status, data){
 }
 
 function doRequest(method, data, callback){
-  $.post(soapurl.poss+"?method="+method, data, callback, 'json');
+  $.post(soapurl.poss+"?method="+method, data, callback, 'json').error(POSS.transaction_result);
 }
-
 
 var click_article = function(){
         var aid = $(this).attr("aid");
@@ -220,6 +225,7 @@ $(document).ready(function(){
     
     // Remise à zéro de la caisse
     restore();
+    waitBadge();
     
     // Récupération et stockage de l'URL du CAS
     doRequest("getCasUrl", {}, POSS.casUrlReceived);
