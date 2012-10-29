@@ -21,7 +21,7 @@ POSS.isLoadedSeller_result = function(r){
     else {
       // Envoi vers le CAS
       var service = [location.protocol, '//', location.host, location.pathname].join('');
-      var url = jQuery.param.querystring(casUrl+'login', 'service='+service); // TODO ajouter /login à l'url
+      var url = jQuery.param.querystring(casUrl+'login', 'service='+service);
       window.location = url;
     }
   }
