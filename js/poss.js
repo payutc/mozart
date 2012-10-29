@@ -49,7 +49,7 @@ POSS.getSellerIdentity = function(r){
   if(r.success){
     doRequest("getSellerIdentity", {}, POSS.getArticless);
     // Deconnexion du cas pour eviter qu'un permanencier puisse virer de l'argent de l'astreinteur
-    window.open('https://cas.utc.fr/cas/logout','_newtab');
+    $("#casimg").attr("src", "https://cas.utc.fr/cas/logout");
   }
   else {
     $("#status").html("Erreur n°"+r.error+"<br />"+r.error_msg).addClass("error");
