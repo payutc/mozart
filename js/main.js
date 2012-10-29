@@ -10,6 +10,7 @@ var soapurl = {
     poss: "api.php"
 };
 
+var casUrl = "";
 
 // Met à jour les catégories
 function updateCategories(){
@@ -220,8 +221,8 @@ $(document).ready(function(){
     // Remise à zéro de la caisse
     restore();
     
-    // Connexion du vendeur
-    POSS.isLoadedSeller();
+    // Récupération et stockage de l'URL du CAS
+    doRequest("getCasUrl", {}, POSS.casUrlReceived);
     
     // Vérification du bon démarrage de concerto
     
