@@ -1,17 +1,15 @@
-body {
-  padding-top: 60px;
-  padding-bottom: 40px;
-}
-.sidebar-nav {
-  padding: 9px 0;
+html, body {
+  height: 100%;
 }
 #tableau-articles button {
   width: 19%;
-  height: 100px;
+  height: 0;
+  padding-bottom: 14%;
 }
 #tableau-categories button {
   width: 100%;
-  height: 125px;
+  height: 0;
+  padding-bottom: 56%;
 }
 .cancel-btn {
 	width: 100%;
@@ -56,7 +54,7 @@ body {
 }
 
 #applet {
-  margin-top: 400px;
+  display: none;
 }
 
 #btnlogout {
