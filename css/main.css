@@ -3,13 +3,11 @@ html, body {
 }
 #tableau-articles button {
   width: 19%;
-  height: 0;
-  padding-bottom: 14%;
+  height: 16.67%;
 }
 #tableau-categories button {
   width: 100%;
-  height: 0;
-  padding-bottom: 56%;
+  height: 20%;
 }
 .cancel-btn {
 	width: 100%;
@@ -29,21 +27,6 @@ html, body {
 #table-panier th.prix {
 	width: 20%;
 }
-/*#status {
-	display: none;
-	background: #fff;
-	top: 100px;
-	left: 30%;
-	width: 40%;
-	height: 200px;
-	position: absolute;
-	z-index: 42;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	-webkit-border-radius: 4px;
-	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-}*/
 #status {
   margin-top: 10px;
 }
