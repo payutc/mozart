@@ -208,7 +208,6 @@ $(document).ready(function(){
     // Changement de la hauteur
     $(window).resize(function(){
       var height = $(document).height() - $("#topbar").height() - parseInt($("#topbar").css("margin-bottom"), 10) - 10;
-      console.log(height);
       $('.fill').height(height);
     })
     $(window).resize();
