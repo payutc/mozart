@@ -108,9 +108,15 @@ POSS.getArticless_result = function(r){
       var newArticle = {
             nom: article.name,
             couleur: '',
-            prix: article.price/100
+            prix: article.price/100,
+            image: null
       };
       articles[article.id] = newArticle;
+      
+      if(article.image){
+        POSS.getImage(article.id, article.image);
+      }
+      
       var parent = r.success.categories[article.categorie_id];
 
       while(parent.parent_id != null){
@@ -124,7 +130,18 @@ POSS.getArticless_result = function(r){
     showButtons(-1);
 }
 
+POSS.getImage = function(article, image){
+  doRequest("getImage64", {img_id: image, outw: 70, outh: 70}, function(r){
+    POSS.getImage_result(article, r)
+  });
+}
 
+POSS.getImage_result = function(article, r){
+  if(r.success){
+    articles[article].image = r.success;
+    showButtons(-1);
+  }
+}
 
 POSS.transaction = function(badge){
     if(!transactionInProgress){
