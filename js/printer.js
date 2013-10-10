@@ -93,7 +93,7 @@ PRINTER.newline = chr(10);
 PRINTER.Solde = function(solde, firstname, lastname) {
 	var txt = "", 
 		newline = PRINTER.newline,
-		date = PRINTER.get_date(),
+		date = PRINTER.get_date();
         
 	//txt += PRINTER.entete;
 	txt += newline.repeat(2);
@@ -167,14 +167,22 @@ PRINTER.Ticket = function(products, infos) {
 
 PRINTER.print = function (txt) {
 	var applet = document.jzebra;
-	applet.append(PRINTER.Init);
-	
-	applet.append("\x1B\x21\x01"); // 3
-	applet.append("\x1B\x74\x10")
-	
-	applet.append(txt);
 
-	applet.append(PRINTER.Cut);
-	applet.append(PRINTER.Init); // 5
-	applet.print();
+    try{
+	    applet.append(PRINTER.Init);
+	
+	    applet.append("\x1B\x21\x01"); // 3
+	    applet.append("\x1B\x74\x10");
+	
+	    applet.append(txt);
+
+	    applet.append(PRINTER.Cut);
+	    applet.append(PRINTER.Init); // 5
+	    applet.print();
+    }
+    catch(e){      
+        alert("L'applet java n'est pas démarrée, et l'imprimante ne peut donc fonctionner. Redémarrez votre navigateur et autorisez l'applet java.");
+    }
+
+
 }
