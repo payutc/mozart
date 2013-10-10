@@ -2,6 +2,9 @@ var POSS = {};
 
 POSS.service = [location.protocol, '//', location.host, location.pathname].join('');
 
+//Nom de la fondation
+POSS.fun_name = "";
+
 POSS.isLoadedSeller = function(){
   doRequest("isLoadedSeller", {}, POSS.isLoadedSeller_result);
 }
@@ -78,6 +81,8 @@ POSS.logout = function(){
 
 POSS.getArticless = function(r){
   if(r.success){
+    //set foundation name
+    POSS.fun_name = r.success.fun_name;
     $("#seller").html(r.success.firstname+" "+r.success.lastname);
 
     doRequest("getArticles", {}, POSS.getArticless_result);
