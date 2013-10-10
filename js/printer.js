@@ -24,9 +24,9 @@ function chr(i) {
      return String.fromCharCode(i);
 } 
 
-//Tronquage bitwise
+//Tronquage 
 function trunc(z){   
-    return ~~z;
+    return Math[ z > 0 ? "floor" : "ceil" ](z);
 }
 
 var code = {
