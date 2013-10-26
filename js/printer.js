@@ -93,10 +93,11 @@ PRINTER.newline = chr(10);
 PRINTER.Solde = function(solde, firstname, lastname) {
 	var txt = "", 
 		newline = PRINTER.newline,
+        titre  = POSS.fun_name,
+        entete = " ".repeat(25 - trunc(titre.length/2)) + "\x1B\x21\x02" + titre + "\x1B\x21\x01\x1B\x7B\x01",
 		date = PRINTER.get_date();
-    
-    //Pour le moment, le nom de la fondation n'est pas affiché lors de l'impression du solde    
-	//txt += PRINTER.entete;
+     
+	txt += entete;
 	txt += newline.repeat(2);
 	txt += date;
 	txt += newline.repeat(2);
