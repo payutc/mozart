@@ -89,8 +89,8 @@ PRINTER.Solde = function(solde, firstname, lastname) {
 	var txt = "", 
 		newline = PRINTER.newline,
 		date = PRINTER.get_date(),
-               titre  = POSS.fun_name,
-               entete = " ".repeat(25 - Math[ z > 0 ? "floor" : "ceil" ](titre.length/2)) + "\x1B\x21\x02" + titre + "\x1B\x21\x01\x1B\x7B\x01",
+        titre  = POSS.fun_name,
+        entete = " ".repeat(25 - Math.floor(titre.length/2)) + "\x1B\x21\x02" + titre + "\x1B\x21\x01\x1B\x7B\x01";
         
 	txt += entete;
 	txt += newline.repeat(2);
@@ -117,8 +117,8 @@ PRINTER.Ticket = function(products, infos) {
 		date = PRINTER.get_date(),
 		nom_prenom = infos.firstname + " " + infos.lastname,
 		msg_perso = infos.msg_perso,
-               titre  = POSS.fun_name,
-               entete = " ".repeat(25 - Math[ z > 0 ? "floor" : "ceil" ](titre.length/2)) + "\x1B\x21\x02" + titre + "\x1B\x21\x01\x1B\x7B\x01",
+        titre  = POSS.fun_name,
+        entete = " ".repeat(25 - Math.floor(titre.length/2)) + "\x1B\x21\x02" + titre + "\x1B\x21\x01\x1B\x7B\x01",
 		total = 0,
 		txt = [];
 
