@@ -24,11 +24,6 @@ function chr(i) {
      return String.fromCharCode(i);
 } 
 
-//Tronquage 
-function trunc(z){   
-    return Math[ z > 0 ? "floor" : "ceil" ](z);
-}
-
 var code = {
 	formFeed 		: chr(12),
 	lineFeed 		: chr(10),
@@ -94,8 +89,10 @@ PRINTER.Solde = function(solde, firstname, lastname) {
 	var txt = "", 
 		newline = PRINTER.newline,
 		date = PRINTER.get_date(),
+        titre  = POSS.fun_name,
+        entete = " ".repeat(25 - Math[ z > 0 ? "floor" : "ceil" ](titre.length/2)) + "\x1B\x21\x02" + titre + "\x1B\x21\x01\x1B\x7B\x01",
         
-	//txt += PRINTER.entete;
+	txt += entete;
 	txt += newline.repeat(2);
 	txt += date;
 	txt += newline.repeat(2);
@@ -121,7 +118,7 @@ PRINTER.Ticket = function(products, infos) {
 		nom_prenom = infos.firstname + " " + infos.lastname,
 		msg_perso = infos.msg_perso,
         titre  = POSS.fun_name,
-		entete = " ".repeat(25 - trunc(titre.length/2)) + "\x1B\x21\x02" + titre + "\x1B\x21\x01\x1B\x7B\x01",
+        entete = " ".repeat(25 - Math[ z > 0 ? "floor" : "ceil" ](titre.length/2)) + "\x1B\x21\x02" + titre + "\x1B\x21\x01\x1B\x7B\x01",
 		total = 0,
 		txt = [];
 
