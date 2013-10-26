@@ -14,6 +14,19 @@ var soapurl = {
 
 var casUrl = "";
 
+function tryPrinterApplet(){
+
+    var applet = document.jzebra;
+
+    try {
+        applet.append("\x1B\x21\x01");  
+    }
+    catch(e){      
+        alert("L'applet java n'est pas démarrée, et l'imprimante ne peut donc pas fonctionner. Redémarrez votre navigateur et autorisez l'applet java.");
+    }
+  
+}
+
 // Met à jour les catégories
 function updateCategories(){
     // Update depuis serveur
@@ -204,6 +217,8 @@ $(document).ready(function(){
     doRequest("getCasUrl", {}, POSS.casUrlReceived);
     
     // Vérification du bon démarrage de concerto
+    tryPrinterApplet();
+    
     
     // Changement de la hauteur
     $(window).resize(function(){

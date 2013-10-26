@@ -24,6 +24,11 @@ function chr(i) {
      return String.fromCharCode(i);
 } 
 
+
+function trunc(z){   
+    return Math[n > 0 ? "floor"  : "ceil"](z);
+}
+
 var code = {
 	formFeed 		: chr(12),
 	lineFeed 		: chr(10),
@@ -84,15 +89,15 @@ PRINTER.get_date = function() {
 	  return dateString;
 }
 PRINTER.newline = chr(10);
-PRINTER.titre = "PICASSO - FOYER ETUDIANT";
-PRINTER.entete = " ".repeat(25 - PRINTER.titre.length/2) + "\x1B\x21\x02" + PRINTER.titre + "\x1B\x21\x01\x1B\x7B\x01"
 
 PRINTER.Solde = function(solde, firstname, lastname) {
 	var txt = "", 
 		newline = PRINTER.newline,
+        titre = POSS.fun_name,
+        entete = " ".repeat(25 - trunc(titre.length/2)) + "\x1B\x21\x02" + titre + "\x1B\x21\x01\x1B\x7B\x01",
 		date = PRINTER.get_date();
-	
-	txt += PRINTER.entete;
+     
+	txt += entete;
 	txt += newline.repeat(2);
 	txt += date;
 	txt += newline.repeat(2);
@@ -117,7 +122,8 @@ PRINTER.Ticket = function(products, infos) {
 		date = PRINTER.get_date(),
 		nom_prenom = infos.firstname + " " + infos.lastname,
 		msg_perso = infos.msg_perso,
-		entete = PRINTER.entete,
+        titre  = POSS.fun_name,
+		entete = " ".repeat(25 - trunc(titre.length/2)) + "\x1B\x21\x02" + titre + "\x1B\x21\x01\x1B\x7B\x01",
 		total = 0,
 		txt = [];
 
@@ -127,7 +133,7 @@ PRINTER.Ticket = function(products, infos) {
 	txt += newline.repeat(2);
 	txt += nom_prenom;
 	txt += newline.repeat(2);
-	
+
 	for(var i=0;i<products.length;i++){
       var nom_produit = articles[products[i].article].nom,
       	  quantite_produit = products[i].quantite,
@@ -163,14 +169,22 @@ PRINTER.Ticket = function(products, infos) {
 
 PRINTER.print = function (txt) {
 	var applet = document.jzebra;
-	applet.append(PRINTER.Init);
-	
-	applet.append("\x1B\x21\x01"); // 3
-	applet.append("\x1B\x74\x10")
-	
-	applet.append(txt);
 
-	applet.append(PRINTER.Cut);
-	applet.append(PRINTER.Init); // 5
-	applet.print();
+    try{
+	    applet.append(PRINTER.Init);
+	
+	    applet.append("\x1B\x21\x01"); // 3
+	    applet.append("\x1B\x74\x10");
+	
+	    applet.append(txt);
+
+	    applet.append(PRINTER.Cut);
+	    applet.append(PRINTER.Init); // 5
+	    applet.print();
+    }
+    catch(e){      
+        alert("L'applet java n'est pas démarrée, et l'imprimante ne peut donc pas fonctionner. Redémarrez votre navigateur et autorisez l'applet java.");
+    }
+
+
 }
