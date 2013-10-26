@@ -19,10 +19,10 @@ function tryPrinterApplet(){
     var applet = document.jzebra;
 
     try {
-    applet.append("\x1B\x21\x01");  
+        applet.append("\x1B\x21\x01");  
     }
     catch(e){      
-    alert("L'applet java n'est pas démarrée, et l'imprimante ne peut donc fonctionner. Redémarrez votre navigateur et autorisez l'applet java.");
+        alert("L'applet java n'est pas démarrée, et l'imprimante ne peut donc fonctionner. Redémarrez votre navigateur et autorisez l'applet java.");
     }
   
 }
