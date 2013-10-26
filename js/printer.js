@@ -94,7 +94,8 @@ PRINTER.Solde = function(solde, firstname, lastname) {
 	var txt = "", 
 		newline = PRINTER.newline,
 		date = PRINTER.get_date();
-        
+    
+    //Pour le moment, le nom de la fondation n'est pas affiché lors de l'impression du solde    
 	//txt += PRINTER.entete;
 	txt += newline.repeat(2);
 	txt += date;
@@ -181,7 +182,7 @@ PRINTER.print = function (txt) {
 	    applet.print();
     }
     catch(e){      
-        alert("L'applet java n'est pas démarrée, et l'imprimante ne peut donc fonctionner. Redémarrez votre navigateur et autorisez l'applet java.");
+        alert("L'applet java n'est pas démarrée, et l'imprimante ne peut donc pas fonctionner. Redémarrez votre navigateur et autorisez l'applet java.");
     }
 
 
