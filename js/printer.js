@@ -93,7 +93,7 @@ PRINTER.newline = chr(10);
 PRINTER.Solde = function(solde, firstname, lastname) {
 	var txt = "", 
 		newline = PRINTER.newline,
-        titre  = POSS.fun_name,
+        titre = POSS.fun_name,
         entete = " ".repeat(25 - trunc(titre.length/2)) + "\x1B\x21\x02" + titre + "\x1B\x21\x01\x1B\x7B\x01",
 		date = PRINTER.get_date();
      
