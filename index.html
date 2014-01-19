@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html ng-app="mozartApp" lang="en">
   <head>
     <meta charset="utf-8">
     <title>mozart by payutc</title>
@@ -18,7 +18,7 @@
       <div class="navbar-inner">
         <div class="container-fluid">
           <a class="brand" href="#">mozart</a>
-          <div class="nav-collapse">
+          <div class="nav-collapse" ng-controller="UserCtrl">
             <p class="navbar-text pull-right"><span id="time"></span> | <span id="seller"></span><button class="btn btn-danger" id="btnlogout">Déconnexion</button></p>
           </div><!--/.nav-collapse -->
         </div>
@@ -121,14 +121,8 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="js/jquery-1.7.2.min.js"></script>
-    <script src="js/jquery-ui-1.8.21.custom.min.js"></script>
-    <script src="js/jquery.ba-bbq.min.js"></script>
-    <script src="js/bootstrap.js"></script>
-    <script src="js/bootstrap-modal.js"></script>
-    <script src="js/soapclient.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/printer.js"></script>
-    <script src="js/poss.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/controllers.js"></script>
   </body>
 </html>
