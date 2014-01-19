@@ -1,4 +1,6 @@
-var POSS = {};
+var POSS = angular.module('poss',[]);
+
+
 
 POSS.service = [location.protocol, '//', location.host, location.pathname].join('');
 
@@ -9,9 +11,10 @@ POSS.isLoadedSeller = function(){
   doRequest("isLoadedSeller", {}, POSS.isLoadedSeller_result);
 }
 
+
 POSS.isLoadedSeller_result = function(r){
   if(r == true){
-    var m = new Object;
+    var m = new Obdject;
     m.success = "ok";
     POSS.getSellerIdentity(m);
   }
