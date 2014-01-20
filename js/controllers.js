@@ -55,12 +55,10 @@ mozartApp.controller('UserCtrl',function($scope, $http, $location, $window, mreq
                         }
                         else{
                             mrequest.do('POSS3', 'loginApp', {key : localStorageService.get('applicationKey')}).success(function(data){
-                                console.log(data);
                             });
                         }
                     }
                     else{
-                    console.log("pouet");
 
                     }
                     });
@@ -73,5 +71,23 @@ mozartApp.controller('UserCtrl',function($scope, $http, $location, $window, mreq
          }
 
 );
+
+/*
+//evenement de UserCtrl appelle ce controller
+// loginApp, getFundations, affiche et demande quelle fun si besoin, et après déclenche ArticleCtrl
+mozartApp.controller('FunCtrl',function($scope, $http, mrequest){
+};
+
+mozartApp.controller('ArticleCtrl',function($scope, $http, mrequest){
+};
+
+mozartApp.controller('TransactionCtrl',function($scope, $http, mrequest){
+}; 
+
+mozartApp.controller('StateCtrl',function($scope, $http, mrequest){
+};
+
+*/
+    
     
     
