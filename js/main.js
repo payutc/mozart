@@ -201,15 +201,5 @@ $(document).ready(function(){
     waitBadge();
     
     // Récupération et stockage de l'URL du CAS
-    doRequest("getCasUrl", {}, POSS.casUrlReceived);
-    
-    // Vérification du bon démarrage de concerto
-    
-    // Changement de la hauteur
-    $(window).resize(function(){
-      var height = $(document).height() - $("#topbar").height() - parseInt($("#topbar").css("margin-bottom"), 10) - 10;
-      $('.fill').height(height);
-    })
-    $(window).resize();
-    
+    doRequest("getCasUrl", {}, POSS.casUrlReceived);    
 });
