@@ -2,15 +2,21 @@ var mozartApp =  angular.module('mozartApp', ['LocalStorageModule'], function($l
       $locationProvider.html5Mode(true);
     });
 
-//Receive 
+//Receive messages and broadcast them to children. Also manages error messages
 mozartApp.controller('MsgCtrl',function($scope){
     
     $scope.$on("MSG_UPDATE_FUN",function(event,message){
         $scope.$broadcast("UPDATE_FUN",message);    
     });
+
+    //ERROR MESSAGES
+    //Rights error : user get 0 fundations on getFundations POST request
+    $scope.$on("ERROR_FUN_RIGHTS",function(event,message){
+        console.log(message);
+        
+    });
     
 });
-
 
 
 mozartApp.service('mrequest', function($http){
@@ -89,8 +95,19 @@ mozartApp.controller('FunCtrl',function($scope, $http, mrequest){
     
     $scope.$on("UPDATE_FUN",function(event,message){
          mrequest.do('POSS3',message).success(function(data){
-         //Constructing  HTML list of fundations
-         $scope.fundations = data;
+
+             //pas de fundation
+             if(data == null) {
+                $scope.$emit("ERROR_FUN_RIGHTS","Aucune fundation trouvée. Vous n'avez pas de droits pour cette application");
+             }
+             else{
+                 //Constructing  HTML list of fundation
+                 $scope.fundations = data;
+                 $scope.funChoice = function(funId){
+                    //to make into parent's scope?
+                    $scope.funId = funId;
+                 }
+             }
        
          });
         
@@ -99,12 +116,12 @@ mozartApp.controller('FunCtrl',function($scope, $http, mrequest){
 });
 
 
+mozartApp.controller('ArticleCtrl',function($scope, $http, mrequest){
+
+});
 
 
 /*
-mozartApp.controller('ArticleCtrl',function($scope, $http, mrequest){
-};
-
 mozartApp.controller('TransactionCtrl',function($scope, $http, mrequest){
 }; 
 

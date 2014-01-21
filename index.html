@@ -49,8 +49,8 @@
 
           <div id="status" class="well">Chargement...</div>
           <ul ng-controller="FunCtrl">
-             <li ng-repeat="fun in fundations" class="ng-cloak">
-              {{ fun.name }} <a ng-click="" href=""></a>
+             <li ng-repeat="fun in fundations" class="ng-cloak" ng-click="funChoice(fun.fun_id)" >
+              {{ fun.name }} <a href=""></a>
              </li>
           </ul>    
         </div>
@@ -63,7 +63,7 @@
           <button class="btn"></button>
         </div>
         
-        <div class="span6 fill" id="tableau-articles">
+        <div class="span6 fill" id="tableau-articles" ng-controller="ArticleCtrl">
           <button class="btn" id="button1"></button>
           <button class="btn" id="button2"></button>
           <button class="btn" id="button3"></button>
