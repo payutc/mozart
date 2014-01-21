@@ -2,6 +2,17 @@ var mozartApp =  angular.module('mozartApp', ['LocalStorageModule'], function($l
       $locationProvider.html5Mode(true);
     });
 
+//Receive 
+mozartApp.controller('MsgCtrl',function($scope){
+    
+    $scope.$on("MSG_UPDATE_FUN",function(event,message){
+        $scope.$broadcast("UPDATE_FUN",message);    
+    });
+    
+});
+
+
+
 mozartApp.service('mrequest', function($http){
     
     this.do = function(service, method, data){ 
@@ -48,7 +59,6 @@ mozartApp.controller('UserCtrl',function($scope, $http, $location, $window, mreq
                             mrequest.do('KEY', 'registerApplication', {app_url: $location.absUrl(), app_name : appName}).success(function(data){
                                 localStorageService.add('applicationKey',data.app_key);
                                 mrequest.do('POSS3', 'loginApp', {key : localStorageService.get('applicationKey')}).success(function(data){
-                                    console.log(data);
                                 });
                                                      
                             });
@@ -59,12 +69,12 @@ mozartApp.controller('UserCtrl',function($scope, $http, $location, $window, mreq
                         }
                     }
                     else{
-
+                        //we have app data, propagate event to fundation controller
+                        $scope.$emit("MSG_UPDATE_FUN","getFundations");
                     }
                     });
 
-        
-                
+            
             }
 
 
@@ -72,12 +82,26 @@ mozartApp.controller('UserCtrl',function($scope, $http, $location, $window, mreq
 
 );
 
-/*
+
 //evenement de UserCtrl appelle ce controller
 // loginApp, getFundations, affiche et demande quelle fun si besoin, et après déclenche ArticleCtrl
 mozartApp.controller('FunCtrl',function($scope, $http, mrequest){
-};
+    
+    $scope.$on("UPDATE_FUN",function(event,message){
+         mrequest.do('POSS3',message).success(function(data){
+         //Constructing  HTML list of fundations
+         $scope.fundations = data;
+       
+         });
+        
+    });
+    
+});
 
+
+
+
+/*
 mozartApp.controller('ArticleCtrl',function($scope, $http, mrequest){
 };
 

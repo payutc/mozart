@@ -13,7 +13,7 @@
     <link href="css/main.css" rel="stylesheet">
   </head>
 
-  <body>
+  <body ng-controller="MsgCtrl"   >
     <div class="navbar" id="topbar">
       <div class="navbar-inner">
         <div class="container-fluid">
@@ -48,6 +48,11 @@
           <button class="btn btn-primary btn-large cancel-btn hide" id="annultransac">Annulation transaction</button>
 
           <div id="status" class="well">Chargement...</div>
+          <ul ng-controller="FunCtrl">
+             <li ng-repeat="fun in fundations" class="ng-cloak">
+              {{ fun.name }} <a ng-click="" href=""></a>
+             </li>
+          </ul>    
         </div>
         
         <div class="span2 fill" id="tableau-categories">
