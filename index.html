@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html ng-app="mozartApp" lang="en">
   <head>
     <meta charset="utf-8">
     <title>mozart by payutc</title>
@@ -13,13 +13,13 @@
     <link href="css/main.css" rel="stylesheet">
   </head>
 
-  <body>
+  <body ng-controller="MsgCtrl"   >
     <div class="navbar" id="topbar">
       <div class="navbar-inner">
         <div class="container-fluid">
           <a class="brand" href="#">mozart</a>
-          <div class="nav-collapse">
-            <p class="navbar-text pull-right"><span id="time"></span> | <span id="seller"></span><button class="btn btn-danger" id="btnlogout">Déconnexion</button></p>
+          <div class="nav-collapse" ng-controller="UserCtrl">
+            <p class="navbar-text pull-right"><span id="time"></span> | {{username}}<button class="btn btn-danger" id="btnlogout">Déconnexion</button></p>
           </div><!--/.nav-collapse -->
         </div>
       </div>
@@ -48,6 +48,11 @@
           <button class="btn btn-primary btn-large cancel-btn hide" id="annultransac">Annulation transaction</button>
 
           <div id="status" class="well">Chargement...</div>
+          <ul ng-controller="FunCtrl">
+             <li ng-repeat="fun in fundations" class="ng-cloak" ng-click="funChoice(fun.fun_id)" >
+              {{ fun.name }} <a href=""></a>
+             </li>
+          </ul>    
         </div>
         
         <div class="span2 fill" id="tableau-categories">
@@ -58,7 +63,13 @@
           <button class="btn"></button>
         </div>
         
-        <div class="span6 fill" id="tableau-articles">
+        <div class="span6 fill" id="tableau-articles" ng-controller="ArticleCtrl">
+
+          <button class="btn" ng-repeat="art in  articles" ng-click="artClick(art.id,art.name,art.price)">
+          {{art.name}}
+          </button>
+
+<!--           <
           <button class="btn" id="button1"></button>
           <button class="btn" id="button2"></button>
           <button class="btn" id="button3"></button>
@@ -93,7 +104,7 @@
           <button class="btn" id="button27"></button>
           <button class="btn" id="button28"></button>
           <button class="btn" id="button29"></button>
-          <button class="btn" id="button30"></button><br />
+          <button class="btn" id="button30"></button><br /> -->
         </div>
       </div><!--/row-->
     </div><!--/.fluid-container-->
@@ -121,14 +132,9 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="js/jquery-1.7.2.min.js"></script>
-    <script src="js/jquery-ui-1.8.21.custom.min.js"></script>
-    <script src="js/jquery.ba-bbq.min.js"></script>
-    <script src="js/bootstrap.js"></script>
-    <script src="js/bootstrap-modal.js"></script>
-    <script src="js/soapclient.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/printer.js"></script>
-    <script src="js/poss.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-local-storage.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/controllers.js"></script>
   </body>
 </html>
