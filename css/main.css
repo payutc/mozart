@@ -36,12 +36,6 @@ html, body {
   color: #fff;
 }
 
-#applet {
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-}
-
 #btnlogout {
   margin-top: -3px;
   margin-left: 10px;
