@@ -9,9 +9,19 @@ mozartApp.controller('MsgCtrl',function($scope){
         $scope.$broadcast("UPDATE_FUN",message);    
     });
 
+    $scope.$on("MSG_GET_ARTICLES",function(event,message){
+        $scope.$broadcast("GET_ARTICLES",message);
+    });
+
     //ERROR MESSAGES
     //Rights error : user get 0 fundations on getFundations POST request
     $scope.$on("ERROR_FUN_RIGHTS",function(event,message){
+        console.log(message);
+        
+    });
+
+    //getArticles error : user gets 0 articles to sell for his fundation
+    $scope.$on("ERROR_GET_ARTICLES",function(event,message){
         console.log(message);
         
     });
@@ -88,9 +98,6 @@ mozartApp.controller('UserCtrl',function($scope, $http, $location, $window, mreq
 
 );
 
-
-//evenement de UserCtrl appelle ce controller
-// loginApp, getFundations, affiche et demande quelle fun si besoin, et après déclenche ArticleCtrl
 mozartApp.controller('FunCtrl',function($scope, $http, mrequest){
     
     $scope.$on("UPDATE_FUN",function(event,message){
@@ -106,6 +113,8 @@ mozartApp.controller('FunCtrl',function($scope, $http, mrequest){
                  $scope.funChoice = function(funId){
                     //to make into parent's scope?
                     $scope.funId = funId;
+                    $scope.fundations = null;
+                    $scope.$emit("MSG_GET_ARTICLES",$scope.funId);
                  }
              }
        
@@ -116,7 +125,24 @@ mozartApp.controller('FunCtrl',function($scope, $http, mrequest){
 });
 
 
-mozartApp.controller('ArticleCtrl',function($scope, $http, mrequest){
+mozartApp.controller('ArticleCtrl',function($scope, $http, mrequest, localStorageService){
+
+    $scope.$on("GET_ARTICLES",function(event,message){
+        mrequest.do('POSS3','getArticles',{fun_id : message}).success(function(data){
+            
+            if(data == null) {
+                $scope.$emit("ERROR_GET_ARTICLES","Aucun article à vendre!");
+             }
+             else{
+                 //Constructing list of articles
+                 $scope.articles = data;
+                 $scope.artClick = function(artId,artName,artPrice){
+                    console.log("Vous avez selectionné " + artName + artId + artPrice);
+                 }
+             }
+        });
+    });
+
 
 });
 

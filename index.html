@@ -64,6 +64,12 @@
         </div>
         
         <div class="span6 fill" id="tableau-articles" ng-controller="ArticleCtrl">
+
+          <button class="btn" ng-repeat="art in  articles" ng-click="artClick(art.id,art.name,art.price)">
+          {{art.name}}
+          </button>
+
+<!--           <
           <button class="btn" id="button1"></button>
           <button class="btn" id="button2"></button>
           <button class="btn" id="button3"></button>
@@ -98,7 +104,7 @@
           <button class="btn" id="button27"></button>
           <button class="btn" id="button28"></button>
           <button class="btn" id="button29"></button>
-          <button class="btn" id="button30"></button><br />
+          <button class="btn" id="button30"></button><br /> -->
         </div>
       </div><!--/row-->
     </div><!--/.fluid-container-->
