@@ -18,13 +18,11 @@
   </head>
 
   <body ng-controller="MsgCtrl">
-    <div class="container" style="display:none">
-      <div id="loading">
-        <div id="circleG">
-          <div id="circleG_1" class="circleG"></div>
-          <div id="circleG_2" class="circleG"></div>
-          <div id="circleG_3" class="circleG"></div>
-        </div>
+    <div class="container fill" ng-hide="ready" ng-init="ready=false">
+      <div id="circleG">
+        <div id="circleG_1" class="circleG"></div>
+        <div id="circleG_2" class="circleG"></div>
+        <div id="circleG_3" class="circleG"></div>
       </div>
     </div>
 
@@ -53,7 +51,7 @@
       </div>
     </div>
 
-    <div class="fluid-container fill">
+    <div class="fluid-container fill ng-cloak" ng-hide="!ready">
       <div class="row fill">
         <div class="col-md-4">
           <table class="table table-striped" id="table-panier">

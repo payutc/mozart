@@ -1,6 +1,11 @@
 html, body {
   height: 100%;
 }
+
+.ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
 #tableau-articles button {
   width: 19%;
   height: 16.67%;
