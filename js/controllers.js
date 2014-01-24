@@ -6,6 +6,7 @@ var mozartApp =  angular.module('mozartApp', ['LocalStorageModule'], function($l
 mozartApp.controller('MsgCtrl',function($scope){
     
     $scope.$on("MSG_UPDATE_FUN",function(event,message){
+        $scope.ready = true;
         $scope.$broadcast("UPDATE_FUN",message);    
     });
 
