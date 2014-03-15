@@ -49,7 +49,7 @@ mozartApp.service('mrequest', function($http){
 });	
 
 
-mozartApp.controller('UserCtrl',function($scope, $http, $location, $window, mrequest, localStorageService) {
+mozartApp.controller('UserCtrl',function($scope, $http, $location, $window, $timeout, mrequest, localStorageService) {
 
 
             //No ticket, redirection to CAS
@@ -93,11 +93,15 @@ mozartApp.controller('UserCtrl',function($scope, $http, $location, $window, mreq
 
             
             }
+    (function poll(){
+        var currentdate = new Date(); 
+        $scope.currentTime = currentdate.getHours() + ":"  
+            + currentdate.getMinutes() + ":" 
+            + currentdate.getSeconds();
 
-
-         }
-
-);
+        $timeout(poll, 1000);
+    })();
+});
 
 mozartApp.controller('FunCtrl',function($scope, $http, mrequest){
     
