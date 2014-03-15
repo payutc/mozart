@@ -1,33 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html ng-app="mozartApp" lang="en">
   <head>
     <meta charset="utf-8">
     <title>mozart by payutc</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <!-- Le styles -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="author" content="payutc">
+    <link href="css/loading.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
   </head>
 
-  <body>
-    <div class="navbar" id="topbar">
-      <div class="navbar-inner">
-        <div class="container-fluid">
-          <a class="brand" href="#">mozart</a>
-          <div class="nav-collapse">
-            <p class="navbar-text pull-right"><span id="time"></span> | <span id="seller"></span><button class="btn btn-danger" id="btnlogout">Déconnexion</button></p>
-          </div><!--/.nav-collapse -->
+  <body ng-controller="MsgCtrl">
+    <div class="container fill" ng-hide="ready" ng-init="ready=false">
+      <div id="circleG">
+        <div id="circleG_1" class="circleG"></div>
+        <div id="circleG_2" class="circleG"></div>
+        <div id="circleG_3" class="circleG"></div>
+      </div>
+    </div>
+
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="fluid-container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">mozart by payutc</a>
+        </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+          <form class="navbar-form navbar-right">
+            <button type="button" id="btnlogout" class="btn btn-danger">Déconnexion</button>
+          </form>
+          <ul class="nav navbar-nav navbar-right" ng-controller="UserCtrl">
+            <li id="time"></li>
+            <li><a href="#">9:42</a></li>
+            <li><a href="#">{{ username }}</a></li>
+          </ul>
+        </nav>
         </div>
       </div>
     </div>
 
-    <div class="container-fluid">
-      <div class="row-fluid">
-        <div class="span4">
+    <div class="fluid-container fill ng-cloak" ng-hide="!ready">
+      <div class="row fill">
+        <div class="col-md-4">
           <table class="table table-striped" id="table-panier">
             <thead>
               <tr>
@@ -48,56 +74,27 @@
           <button class="btn btn-primary btn-large cancel-btn hide" id="annultransac">Annulation transaction</button>
 
           <div id="status" class="well">Chargement...</div>
+          <ul ng-controller="FunCtrl">
+             <li ng-repeat="fun in fundations" class="ng-cloak" ng-click="funChoice(fun.fun_id)" >
+              {{ fun.name }} <a href=""></a>
+             </li>
+          </ul>    
         </div>
-        
-        <div class="span2 fill" id="tableau-categories">
-          <button class="btn"></button><br />
-          <button class="btn"></button><br />
-          <button class="btn"></button><br />
-          <button class="btn"></button><br />
-          <button class="btn"></button>
+      
+        <div class="col-md-2 fill" id="tableau-categories">
+          <button class="btn btn-default"></button><br />
+          <button class="btn btn-default"></button><br />
+          <button class="btn btn-default"></button><br />
+          <button class="btn btn-default"></button><br />
+          <button class="btn btn-default"></button>
         </div>
-        
-        <div class="span6 fill" id="tableau-articles">
-          <button class="btn" id="button1"></button>
-          <button class="btn" id="button2"></button>
-          <button class="btn" id="button3"></button>
-          <button class="btn" id="button4"></button>
-          <button class="btn" id="button5"></button><br />
-          
-          <button class="btn" id="button6"></button>
-          <button class="btn" id="button7"></button>
-          <button class="btn" id="button8"></button>
-          <button class="btn" id="button9"></button>
-          <button class="btn" id="button10"></button><br />
-          
-          <button class="btn" id="button11"></button>
-          <button class="btn" id="button12"></button>
-          <button class="btn" id="button13"></button>
-          <button class="btn" id="button14"></button>
-          <button class="btn" id="button15"></button><br />
-          
-          <button class="btn" id="button16"></button>
-          <button class="btn" id="button17"></button>
-          <button class="btn" id="button18"></button>
-          <button class="btn" id="button19"></button>
-          <button class="btn" id="button20"></button><br />
-          
-          <button class="btn" id="button21"></button>
-          <button class="btn" id="button22"></button>
-          <button class="btn" id="button23"></button>
-          <button class="btn" id="button24"></button>
-          <button class="btn" id="button25"></button><br />
-          
-          <button class="btn" id="button26"></button>
-          <button class="btn" id="button27"></button>
-          <button class="btn" id="button28"></button>
-          <button class="btn" id="button29"></button>
-          <button class="btn" id="button30"></button><br />
+      
+        <div class="col-md-6 fill" ng-controller="ArticleCtrl" id="tableau-articles">
+          <button class="btn btn-default" ng-repeat="art in articles" ng-click="artClick(art.id, art.name, art.price)">{{ art.name }}</button>
         </div>
       </div><!--/row-->
-    </div><!--/.fluid-container-->
-
+    </div> <!-- /container -->
+    
     <div class="modal hide fade" id="BuyerInfo">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">×</button>
@@ -110,25 +107,10 @@
         <a href="#" class="btn btn-primary btn-large" data-dismiss="modal">Fermer</a>
       </div>
     </div>
-    
-    <div id="applet">
-      <applet name="concerto" codebase="class/" code="Concerto.class" height="300" width="300" archive="concerto.jar"></applet>
-      <applet name="jzebra" codebase="class/" code="jzebra.PrintApplet.class" archive="./jzebra.jar" width="50px" height="50px">
-        <param name="printer" value="jzebra">
-      </applet>
-    </div>
 
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="js/jquery-1.7.2.min.js"></script>
-    <script src="js/jquery-ui-1.8.21.custom.min.js"></script>
-    <script src="js/jquery.ba-bbq.min.js"></script>
-    <script src="js/bootstrap.js"></script>
-    <script src="js/bootstrap-modal.js"></script>
-    <script src="js/soapclient.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/printer.js"></script>
-    <script src="js/poss.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-local-storage.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/controllers.js"></script>
   </body>
 </html>
