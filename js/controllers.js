@@ -17,18 +17,14 @@ mozartApp.controller('MsgCtrl',function($scope){
     //ERROR MESSAGES
     //Rights error : user get 0 fundations on getFundations POST request
     $scope.$on("ERROR_FUN_RIGHTS",function(event,message){
-        console.log(message);
-        
+        console.log(message);  
     });
 
     //getArticles error : user gets 0 articles to sell for his fundation
     $scope.$on("ERROR_GET_ARTICLES",function(event,message){
-        console.log(message);
-        
+        console.log(message);  
     });
-    
 });
-
 
 mozartApp.service('mrequest', function($http){
     
@@ -46,12 +42,9 @@ mozartApp.service('mrequest', function($http){
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         })
     }
-
 });	
 
-
 mozartApp.controller('UserCtrl',function($scope, $http, $location, $window, $timeout, mrequest, localStorageService) {
-
 
             //No ticket, redirection to CAS
             if(!$location.search().ticket){    
@@ -61,7 +54,6 @@ mozartApp.controller('UserCtrl',function($scope, $http, $location, $window, $tim
             }
             //Ticket validation and key application
             else {
-                
                 var ticket = $location.search().ticket ;
                 $location.search('');
                 mrequest.do('KEY', 'loginCas', {ticket: ticket, service: $location.absUrl()}).success(function(data){
@@ -77,8 +69,7 @@ mozartApp.controller('UserCtrl',function($scope, $http, $location, $window, $tim
                                 mrequest.do('KEY', 'registerApplication', { app_url: 'test', app_name : appName }).success(function(data){
                                     localStorageService.add('applicationKey',data.app_key);
                                     mrequest.do('POSS3', 'loginApp', {key : localStorageService.get('applicationKey')}).success(function(data){
-                                    });
-                                                         
+                                    });                       
                                 });
                             }
                             else{
@@ -92,8 +83,6 @@ mozartApp.controller('UserCtrl',function($scope, $http, $location, $window, $tim
                         }
                         });
                });
-
-            
             }
     (function poll(){
         var currentdate = new Date(); 
@@ -106,11 +95,10 @@ mozartApp.controller('UserCtrl',function($scope, $http, $location, $window, $tim
 });
 
 mozartApp.controller('FunCtrl',function($scope, $http, mrequest){
-    
+
     $scope.$on("UPDATE_FUN",function(event,message){
          mrequest.do('POSS3',message).success(function(data){
-
-             //pas de fundation
+             //No fundation
              if(data == null) {
                 $scope.$emit("ERROR_FUN_RIGHTS","Aucune fundation trouvée. Vous n'avez pas de droits pour cette application");
              }
@@ -124,11 +112,8 @@ mozartApp.controller('FunCtrl',function($scope, $http, mrequest){
                     $scope.$emit("MSG_GET_ARTICLES",$scope.funId);
                  }
              }
-       
          });
-        
     });
-    
 });
 
 
@@ -149,8 +134,6 @@ mozartApp.controller('ArticleCtrl',function($scope, $http, mrequest, localStorag
              }
         });
     });
-
-
 });
 
 
