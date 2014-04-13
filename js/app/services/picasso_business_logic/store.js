@@ -14,6 +14,14 @@ store.prototype.getProduct = function (id) {
     return null;
 }
 
+store.prototype.getProductByName = function (name) {
+    for (var i = 0; i < this.products.length; i++) {
+        if (this.products[i].name == name)
+            return this.products[i];
+    }
+    return null;
+}
+
 store.prototype.addProduct = function(id, name, categorie_id, fundation_id, price, stock, alcool, image) {
     var myProduct = new product(id, name, categorie_id, fundation_id, price, stock, alcool, image);
     this.products.push(myProduct);
