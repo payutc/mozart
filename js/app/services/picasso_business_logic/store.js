@@ -1,4 +1,3 @@
-//----------------------------------------------------------------
 // Store (contains the products) built for a specific fundation
 //
 function store() {

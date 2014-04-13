@@ -10,7 +10,6 @@ mozartApp.controller('FunCtrl', function($scope, $http, mrequest){
                  //Constructing  HTML list of fundation
                  $scope.fundations = data;
                  $scope.funChoice = function(funId){
-                    //to make into parent's scope?
                     $scope.funId = funId;
                     $scope.fundations = null;
                     $scope.$emit("MSG_GET_ARTICLES",$scope.funId);

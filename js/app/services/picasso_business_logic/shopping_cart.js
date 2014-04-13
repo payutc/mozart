@@ -1,4 +1,3 @@
-//----------------------------------------------------------------
 // shopping cart
 //
 function shoppingCart(cartName) {
@@ -8,18 +7,6 @@ function shoppingCart(cartName) {
     // load items from local storage when initializing
     this.loadItems();
 
-/*
-    // save items to local storage when unloading
-    var self = this;
-    $(window).unload(function () {
-        if (self.clearCart) {
-            self.clearItems();
-        }
-        self.saveItems();
-        self.clearCart = false;
-    });
-*/
-    
 }
 
 
@@ -38,7 +25,7 @@ shoppingCart.prototype.loadItems = function () {
             }
         }
         catch (err) {
-            // ignore errors while loading...
+            // ignore errors while loading
         }
     }
 }
@@ -108,19 +95,7 @@ shoppingCart.prototype.clearItems = function () {
     this.items = [];
     this.saveItems();
 }
-/*
-// utility methods
-shoppingCart.prototype.addFormFields = function (form, data) {
-    if (data != null) {
-        $.each(data, function (name, value) {
-            if (value != null) {
-                var input = $("<input></input>").attr("type", "hidden").attr("name", name).val(value);
-                form.append(input);
-            }
-        });
-    }
-}
-*/
+
 shoppingCart.prototype.toNumber = function (value) {
     value = value * 1;
     return isNaN(value) ? 0 : value;
