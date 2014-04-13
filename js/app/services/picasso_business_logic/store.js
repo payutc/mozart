@@ -25,4 +25,3 @@ store.prototype.addProduct = function(id, name, categorie_id, fundation_id, pric
     var myProduct = new product(id, name, categorie_id, fundation_id, price, stock, alcool, image);
     this.products.push(myProduct);
 }
-

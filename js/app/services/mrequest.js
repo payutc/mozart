@@ -7,11 +7,12 @@ mozartApp.service('mrequest', ['$http', function($http){
                 str.push(encodeURIComponent(p) + "=" + encodeURIComponent(data[p]));
 
         return $http({
-        withCredentials: true,
-        method: 'POST',
-        url: server_url + service + '/' + method,
-        data: str.join("&"),
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            withCredentials: true,
+            method: 'POST',
+            url: server_url + service + '/' + method,
+            data: str.join("&"),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         })
     }
-}]); 
+}]);
+ 

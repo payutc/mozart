@@ -18,4 +18,3 @@ mozartApp.controller('FunCtrl', function($scope, $http, mrequest){
          });
     });
 });
-
