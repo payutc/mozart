@@ -1,4 +1,4 @@
-mozartApp.controller('FunCtrl',function($scope, $http, mrequest){
+mozartApp.controller('FunCtrl', function($scope, $http, mrequest){
 
     $scope.$on("UPDATE_FUN",function(event,message){
          mrequest.do('POSS3',message).success(function(data){

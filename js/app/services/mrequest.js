@@ -1,4 +1,4 @@
-mozartApp.service('mrequest', function($http){
+mozartApp.service('mrequest', ['$http', function($http){
     
     this.do = function(service, method, data){ 
         var str = [];
@@ -14,4 +14,4 @@ mozartApp.service('mrequest', function($http){
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         })
     }
-}); 
+}]); 

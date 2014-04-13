@@ -8,6 +8,7 @@ mozartApp.controller('ArticleCtrl',function($scope, $http, mrequest, localStorag
              }
              else{
                  //Constructing list of articles
+                 console.log(data)
                  $scope.articles = data;
                  $scope.artClick = function(artId,artName,artPrice){
                     console.log("Vous avez selectionné " + artName + artId + artPrice);

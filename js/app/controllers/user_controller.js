@@ -1,6 +1,6 @@
 mozartApp.controller('UserCtrl',function($scope, $http, $location, $window, $timeout, mrequest, localStorageService) {
 
-            //No ticket, redirection to CAS
+            //If there is no ticket, redirection to CAS with $windows.location
             if(!$location.search().ticket){    
                 $http.post(server_url + '/POSS3/getCasUrl').success(function(data) {
                     $window.location.href = angular.fromJson(data) + '/login?service=' + encodeURIComponent($location.absUrl());
