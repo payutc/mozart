@@ -5,7 +5,6 @@ function shoppingCart(cartName) {
     this.cartName = cartName;
     this.clearCart = false;
     this.items = [];
-
     // load items from local storage when initializing
     this.loadItems();
 
@@ -19,7 +18,8 @@ function shoppingCart(cartName) {
         self.saveItems();
         self.clearCart = false;
     });
-    */
+*/
+    
 }
 
 
@@ -108,7 +108,7 @@ shoppingCart.prototype.clearItems = function () {
     this.items = [];
     this.saveItems();
 }
-
+/*
 // utility methods
 shoppingCart.prototype.addFormFields = function (form, data) {
     if (data != null) {
@@ -120,6 +120,7 @@ shoppingCart.prototype.addFormFields = function (form, data) {
         });
     }
 }
+*/
 shoppingCart.prototype.toNumber = function (value) {
     value = value * 1;
     return isNaN(value) ? 0 : value;

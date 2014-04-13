@@ -1,4 +1,2 @@
-/*
-mozartApp.controller('TransactionCtrl',function($scope, $http, mrequest){
+mozartApp.controller('TransactionCtrl',function($scope, $http, mrequest, DataService){
 }; 
-*/

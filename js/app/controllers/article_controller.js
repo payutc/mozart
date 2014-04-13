@@ -19,8 +19,25 @@ mozartApp.controller('ArticleCtrl',function($scope, $http, mrequest, localStorag
                         $scope.articles[i]['alcool']);
                  };
 
-                 $scope.artClick = function(artId,artName,artPrice){
-                    console.log("Vous avez selectionné " + artName + artId + artPrice);
+                console.log($scope.cart.getTotalPrice(null))
+
+
+                 $scope.artClick = function(artId){
+                    console.log("Vous avez selectionné " + artId );
+                    // Get product from store
+                    product = $scope.store.getProduct(artId)
+                    // Add product to cart
+                    $scope.cart.addItem(product['id'], product['name'], product['price'], 1)
+                    // Add a line on the checkout
+                    // DEBUG : total price of cart
+                    console.log($scope.cart.getTotalPrice(null))
+                    console.log($scope.cart.items)
+
+                 }
+
+                 $scope.resetCart = function(){
+                    console.log("Reseting cart...");
+                    $scope.cart.clearItems();
                  }
              }
         });
