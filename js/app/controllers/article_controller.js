@@ -2,6 +2,8 @@ mozartApp.controller('ArticleCtrl',function($scope, $http, mrequest, localStorag
 
     $scope.store = DataService.store;
     $scope.cart = DataService.cart;
+    // Just in case, clearing the cart
+    $scope.cart.clearItems();
     $scope.$on("GET_ARTICLES",function(event,message){
         mrequest.do('POSS3','getArticles', {fun_id : message}).success(function(data){
 
@@ -33,6 +35,10 @@ mozartApp.controller('ArticleCtrl',function($scope, $http, mrequest, localStorag
 
                  $scope.resetCart = function(){
                     $scope.cart.clearItems();
+                 }
+
+                 $scope.cancelLastOperation = function(){
+                    $scope.cart.cancelLastItem();
                  }
              }
         });

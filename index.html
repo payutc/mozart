@@ -70,7 +70,7 @@
           </table>
           <b>{{cart.getTotalCount()}}</b> items, <b>{{cart.getTotalPrice() }} euros </b>
           <button class="btn btn-primary btn-large cancel-btn" ng-click="resetCart()" id="effacertout">Effacer toutes les lignes</button>
-          <button class="btn btn-primary btn-large cancel-btn hide" id="annultransac">Annulation transaction</button>
+          <button class="btn btn-primary btn-large cancel-btn" id="annultransac" ng-click ="cancelLastOperation()">Annuler la dernière opération</button>
 
           <div id="status" class="well">Chargement...</div>
           <ul ng-controller="FunCtrl">

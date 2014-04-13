@@ -66,6 +66,18 @@ shoppingCart.prototype.addItem = function (id, name, price, quantity) {
     }
 }
 
+// Reduce quantity of last item by 1. If quantity = 0 remove item from the cart
+
+shoppingCart.prototype.cancelLastItem = function() {
+    var last_item = this.items[this.items.length - 1];
+    last_item.quantity = this.toNumber(last_item.quantity - 1);
+    if (last_item.quantity <= 0) {
+        this.items.splice((this.items.length - 1), 1);
+    }
+}
+
+//var last_element = my_array[my_array.length - 1];
+
 // get the total price for all items currently in the cart
 shoppingCart.prototype.getTotalPrice = function (id) {
     var total = 0;
