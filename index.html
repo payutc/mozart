@@ -51,7 +51,7 @@
       </div>
     </div>
 
-    <div class="fluid-container fill ng-cloak" ng-hide="!ready">
+    <div class="fluid-container fill ng-cloak" ng-controller="ArticleCtrl" ng-hide="!ready">
       <div class="row fill">
         <div class="col-md-4">
           <table class="table table-striped" id="table-panier">
@@ -62,16 +62,15 @@
                 <th class="prix">Prix</th>
               </tr>
             </thead>
-            <tbody id="lignes">
-              <tr>
-                <td>Erreur de chargement de la caisse</td>
-                <td></td>
-                <td></td>
+            <tbody id="lignes"> 
+              <tr ng-repeat="cartItem in cart.items">
+                <td> {{ cartItem.name }}, {{cartItem.quantity}} , {{ cartItem.price }} euros </td>
               </tr>
             </tbody>
           </table>
-          <button class="btn btn-primary btn-large cancel-btn" id="effacertout">Effacer toutes les lignes</button>
-          <button class="btn btn-primary btn-large cancel-btn hide" id="annultransac">Annulation transaction</button>
+          <b>{{cart.getTotalCount()}}</b> items, <b>{{cart.getTotalPrice() }} euros </b>
+          <button class="btn btn-primary btn-large cancel-btn" ng-click="resetCart()" id="effacertout">Effacer toutes les lignes</button>
+          <button class="btn btn-primary btn-large cancel-btn" id="annultransac" ng-click ="cancelLastOperation()">Annuler la dernière opération</button>
 
           <div id="status" class="well">Chargement...</div>
           <ul ng-controller="FunCtrl">
@@ -90,7 +89,7 @@
         </div>
       
         <div class="col-md-6 fill" ng-controller="ArticleCtrl" id="tableau-articles">
-          <button class="btn btn-default" ng-repeat="art in articles" ng-click="artClick(art.id, art.name, art.price)">{{ art.name }}</button>
+          <button class="btn btn-default" ng-repeat="art in articles" ng-click="artClick(art.id)">{{ art.name }}</button>
         </div>
       </div><!--/row-->
     </div> <!-- /container -->
@@ -108,9 +107,21 @@
       </div>
     </div>
 
-    <script src="js/angular.min.js"></script>
-    <script src="js/angular-local-storage.js"></script>
-    <script src="js/config.js"></script>
-    <script src="js/controllers.js"></script>
+    <script src="js/dependencies/angular.min.js"></script>
+    <script src="js/dependencies/angular-local-storage.js"></script>
+    <script src="js/app/app.js"></script>
+    <script src="js/app/config/config.js"></script>
+    <script src="js/app/controllers/article_controller.js"></script>
+    <script src="js/app/controllers/fundation_controller.js"></script>
+    <script src="js/app/controllers/user_controller.js"></script>
+    <script src="js/app/controllers/message_controller.js"></script>
+    <script src="js/app/controllers/transaction_controller.js"></script>
+    <script src="js/app/services/mrequest.js"></script>
+    <script src="js/app/services/data_service.js"></script>
+    <script src="js/app/services/picasso_business_logic/product.js"></script>
+    <script src="js/app/services/picasso_business_logic/store.js"></script>
+    <script src="js/app/services/picasso_business_logic/shopping_cart.js"></script>
+
+
   </body>
 </html>
