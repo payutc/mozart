@@ -1,7 +1,12 @@
-mozartApp.controller('StateCtrl',function($scope, $http, mrequest, CardReaderService){
+mozartApp.controller('StateCtrl',function($scope, $http, mrequest, JCappucinoService, DataService){
   $scope.message = "Chargement...";
  
-  CardReaderService.subscribe("pong", function(message) {
+  JCappucinoService.subscribe("pong", function(message) {
     $scope.message = message;
   });
+
+  
+
+
+
 });
