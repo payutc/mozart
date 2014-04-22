@@ -1,5 +1,5 @@
 // Websocket for reading cards and printing
-mozartApp.factory('CardReaderService', function() {
+mozartApp.factory('JCappucinoService', function() {
   var service = {
     callback: {}
   };
