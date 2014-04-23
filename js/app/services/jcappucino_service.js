@@ -1,8 +1,19 @@
 // Websocket for reading cards and printing
 mozartApp.factory('JCappucinoService', function() {
+
+ 
   var service = {
     callback: {}
   };
+
+  //MOCKS while waiting that jcappucino works on Windows
+
+  service.mockCard = function() {
+    return "A123456";
+  }
+
+  // Actual implementation
+   /*
  
   service.connect = function() {
     if(service.ws) { return; }
@@ -40,6 +51,7 @@ mozartApp.factory('JCappucinoService', function() {
   }
  
   service.connect();
- 
+  */
   return service;
+ 
 });
