@@ -73,11 +73,14 @@
           <button class="btn btn-primary btn-large cancel-btn" id="annultransac" ng-click ="cancelLastOperation()">Annuler la dernière opération</button>
 
           <div ng-controller="StateCtrl" id="status" class="well">
+              <button type="button" ng-click="cardScanned()" class="btn btn-primary">Tap card!</button>
             {{state}}
-            <!--<div ng-switch="state">
-              <!--<div ng-switch-when="">
+            <div ng-switch="state">
+              <div ng-switch-when="userPanel">
               </div>
-            </div>-->
+               <div ng-switch-when="transaction">
+              </div>
+            </div>
           </div>
           <ul ng-controller="FunCtrl">
              <li ng-repeat="fun in fundations" class="ng-cloak" ng-click="funChoice(fun.fun_id)" >
