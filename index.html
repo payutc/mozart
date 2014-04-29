@@ -64,11 +64,12 @@
             </thead>
             <tbody id="lignes"> 
               <tr ng-repeat="cartItem in cart.items">
-                <td> {{ cartItem.name }} </td><td> {{cartItem.quantity}} </td><td> {{cartItem.price / 100 * cartItem.quantity}} € </td>
+                <td> {{ cartItem.name }} </td><td> {{cartItem.quantity}} </td><td> {{cartItem.price * cartItem.quantity / 100}} € </td>
               </tr>
+              <tr><td><b>Total : {{cart.getTotalCount()}}</b> Articles</td><td></td><td><b>{{cart.getTotalPrice() / 100}} €</b></td>
             </tbody>
           </table>
-          <b>{{cart.getTotalCount()}}</b> items, <b>{{cart.getTotalPrice() }} euros </b>
+          
           <button class="btn btn-primary btn-large cancel-btn" ng-click="resetCart()" id="effacertout">Effacer toutes les lignes</button>
           <button class="btn btn-primary btn-large cancel-btn" id="annultransac" ng-click ="cancelLastOperation()">Annuler la dernière opération</button>
 
