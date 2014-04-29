@@ -1,4 +1,4 @@
-mozartApp.controller('UserCtrl',function($scope, $http, $location, $window, $timeout, mrequest, localStorageService) {
+mozartApp.controller('UserCtrl',function($scope, $http, $location, $window, $timeout, $modal, mrequest, localStorageService) {
     //If there is no ticket, redirection to CAS with $windows.location
     if(!$location.search().ticket){    
         $http.post(server_url + '/POSS3/getCasUrl').success(function(data) {
@@ -23,10 +23,9 @@ mozartApp.controller('UserCtrl',function($scope, $http, $location, $window, $tim
         // Get user info
         mrequest.do('KEY', 'getStatus', {}).success(function(data){
             $scope.username = data.user_data.firstname +' '+ data.user_data.lastname;
+            // Request login app
+            $scope.$emit("LOG_APP","");
         });
-
-        // Request login app
-        $scope.$emit("LOG_APP","");
     });
 
     $scope.$on("LOG_APP", function(event, message) {
@@ -44,12 +43,28 @@ mozartApp.controller('UserCtrl',function($scope, $http, $location, $window, $tim
     });
 
     $scope.$on("NEW_APP", function(event, message) {
-        var appName = "dummyName";
-        mrequest.do('KEY', 'registerApplication', { app_url: 'test', app_name : appName }).success(function(data){
-            localStorageService.add('applicationKey',data.app_key);
-            $scope.$emit("LOG_APP","");                   
+        $scope.reset();
+        $scope.modalInstance = $modal.open({
+            templateUrl: 'modalNewApp.html',
+            scope: $scope,
+            keyboard: false
         });
     });
+
+    $scope.reset = function() {
+        $scope.app = {
+            title: 'Mozart - '+(new Date()).toDateString(),
+            desc: 'Déclaré par '+$scope.username
+        };
+    }
+
+    $scope.declare = function(app) {
+        mrequest.do('KEY', 'registerApplication', { app_url: $location.absUrl(), app_name: $scope.app.title, app_desc: $scope.app.desc }).success(function(data){
+            localStorageService.add('applicationKey',data.app_key);
+            $scope.modalInstance.close();
+            $scope.$emit("LOG_APP","");                   
+        });
+    }
 
     $scope.$on("LOGOUT",function(event,message){
         mrequest.do('KEY', 'logout', {}).success(function(data){
