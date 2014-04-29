@@ -39,12 +39,36 @@
         </div>
         <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
           <form class="navbar-form navbar-right">
-            <button type="button" id="btnlogout" class="btn btn-danger">Déconnexion</button>
+            <button type="button" id="btnlogout" class="btn btn-danger" ng-click="onLogoutClick()">Déconnexion</button>
           </form>
           <ul class="nav navbar-nav navbar-right" ng-controller="UserCtrl">
             <li id="time"></li>
             <li><a href="#">{{ currentTime }}</a></li>
             <li><a href="#">{{ username }}</a></li>
+            <script type="text/ng-template" id="modalNewApp.html">
+              <div class="modal-header">
+                <h3>Déclaration d'une nouvelle application</h3>
+              </div>
+              <div class="modal-body">
+                <p>Cette application n'est pas encore déclaré.</p>
+                <form novalidate class="form-horizontal" role="form">
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Titre</label>
+                  <div class="col-sm-10">
+                    <input type="text" ng-model="app.title" class="form-control" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Description</label>
+                  <div class="col-sm-10">
+                    <input type="text" ng-model="app.desc" class="form-control" />
+                  </div>
+                </div>
+                  <button class="btn btn-default" ng-click="reset()">RESET</button>
+                  <button class="btn btn-primary" ng-click="declare(app)">Enregistrer</button>
+                </form>
+              </div>
+            </script>
           </ul>
         </nav>
         </div>
@@ -64,16 +88,17 @@
             </thead>
             <tbody id="lignes"> 
               <tr ng-repeat="cartItem in cart.items">
-                <td> {{ cartItem.name }}, {{cartItem.quantity}} , {{ cartItem.price }} euros </td>
+                <td> {{ cartItem.name }} </td><td> {{cartItem.quantity}} </td><td> {{cartItem.price * cartItem.quantity / 100}} € </td>
               </tr>
+              <tr><td><b>Total : {{cart.getTotalCount()}}</b> Articles</td><td></td><td><b>{{cart.getTotalPrice() / 100}} €</b></td>
             </tbody>
           </table>
-          <b>{{cart.getTotalCount()}}</b> items, <b>{{cart.getTotalPrice() }} euros </b>
+          
           <button class="btn btn-primary btn-large cancel-btn" ng-click="resetCart()" id="effacertout">Effacer toutes les lignes</button>
           <button class="btn btn-primary btn-large cancel-btn" id="annultransac" ng-click ="cancelLastOperation()">Annuler la dernière opération</button>
 
           <div ng-controller="StateCtrl" id="status" class="well">
-              <button type="button" ng-click="cardScanned()" class="btn btn-primary">Tap card!</button>
+              <button type="button" ng-click="cardScanned()" class="btn btn-primary" ng-hide="!dev_mode">Simuler carte !</button>
             {{state}}
             <div ng-switch="state">
               <div ng-switch-when="userPanel">
@@ -81,12 +106,7 @@
                <div ng-switch-when="transaction">
               </div>
             </div>
-          </div>
-          <ul ng-controller="FunCtrl">
-             <li ng-repeat="fun in fundations" class="ng-cloak" ng-click="funChoice(fun.fun_id)" >
-              {{ fun.name }} <a href=""></a>
-             </li>
-          </ul>    
+          </div>  
         </div>
       
         <div class="col-md-2 fill" id="tableau-categories">
@@ -116,8 +136,37 @@
       </div>
     </div>
 
-    <script src="js/dependencies/angular.js"></script>
+    <div ng-controller="FunCtrl">
+      <script type="text/ng-template" id="modalFunCtrl.html">
+        <div class="modal-header">
+          <h3>Choix de fundation</h3>
+        </div>
+        <div class="modal-body">
+          <p>Vous avez les droits sur plusieurs fundations, merci de choisir celle pour laquelle vous voullez vendre :</p>
+          <ul >
+            <li ng-repeat="fun in fundations" class="ng-cloak" ng-click="funChoice(fun.fun_id)" >
+              <button class="btn btn-primary">{{ fun.name }}</button>
+            </li>
+          </ul>  
+        </div>
+      </script>
+    </div>
+
+    <script type="text/ng-template" id="modalCritError.html">
+      <div class="modal-header">
+        <h3>Erreur Critique</h3>
+      </div>
+      <div class="modal-body">
+        <p>L'erreur suivante à eu lieu :
+        <pre>{{ critError }}</pre>
+        Si vous ne savez pas quoi faire, demandez à un responsable. Dans le cas ou aucun responsable n'est présent, vous pouvez essayer d'utiliser le bouton "déconnexion" et réessayer de vous connecter.</p>
+        <button class="btn btn-danger" ng-click="onLogoutClick()">Déconnexion</button>
+      </div>
+    </script>
+
+    <script src="js/dependencies/angular.min.js"></script>
     <script src="js/dependencies/angular-local-storage.js"></script>
+    <script src="js/dependencies/ui-bootstrap-tpls-0.10.0.min.js"></script>
     <script src="js/app/app.js"></script>
     <script src="js/app/config/config.js"></script>
     <script src="js/app/services/jcappucino_service.js"></script>
@@ -126,13 +175,10 @@
     <script src="js/app/controllers/fundation_controller.js"></script>
     <script src="js/app/controllers/user_controller.js"></script>
     <script src="js/app/controllers/message_controller.js"></script>
-    <script src="js/app/controllers/transaction_controller.js"></script>
     <script src="js/app/services/mrequest.js"></script>
     <script src="js/app/services/data_service.js"></script>
     <script src="js/app/services/picasso_business_logic/product.js"></script>
     <script src="js/app/services/picasso_business_logic/store.js"></script>
     <script src="js/app/services/picasso_business_logic/shopping_cart.js"></script>
-
-
   </body>
 </html>

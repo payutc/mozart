@@ -2,6 +2,7 @@
 mozartApp.controller('StateCtrl', function($scope, $http, mrequest, JCappucinoService, DataService){
     $scope.state = "chargement";
     $scope.cart = DataService.cart;
+    $scope.dev_mode = DEV_MODE;
       
     $scope.cardScanned = function(){
         console.log("A card has been scanned!");
