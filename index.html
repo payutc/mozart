@@ -64,7 +64,7 @@
             </thead>
             <tbody id="lignes"> 
               <tr ng-repeat="cartItem in cart.items">
-                <td> {{ cartItem.name }}, {{cartItem.quantity}} , {{ cartItem.price }} euros </td>
+                <td> {{ cartItem.name }} </td><td> {{cartItem.quantity}} </td><td> {{cartItem.price / 100 * cartItem.quantity}} € </td>
               </tr>
             </tbody>
           </table>
@@ -73,7 +73,7 @@
           <button class="btn btn-primary btn-large cancel-btn" id="annultransac" ng-click ="cancelLastOperation()">Annuler la dernière opération</button>
 
           <div ng-controller="StateCtrl" id="status" class="well">
-              <button type="button" ng-click="cardScanned()" class="btn btn-primary">Tap card!</button>
+              <button type="button" ng-click="cardScanned()" class="btn btn-primary" ng-hide="!dev_mode">Simuler carte !</button>
             {{state}}
             <div ng-switch="state">
               <div ng-switch-when="userPanel">
@@ -116,7 +116,7 @@
       </div>
     </div>
 
-    <script src="js/dependencies/angular.js"></script>
+    <script src="js/dependencies/angular.min.js"></script>
     <script src="js/dependencies/angular-local-storage.js"></script>
     <script src="js/app/app.js"></script>
     <script src="js/app/config/config.js"></script>
@@ -126,13 +126,10 @@
     <script src="js/app/controllers/fundation_controller.js"></script>
     <script src="js/app/controllers/user_controller.js"></script>
     <script src="js/app/controllers/message_controller.js"></script>
-    <script src="js/app/controllers/transaction_controller.js"></script>
     <script src="js/app/services/mrequest.js"></script>
     <script src="js/app/services/data_service.js"></script>
     <script src="js/app/services/picasso_business_logic/product.js"></script>
     <script src="js/app/services/picasso_business_logic/store.js"></script>
     <script src="js/app/services/picasso_business_logic/shopping_cart.js"></script>
-
-
   </body>
 </html>
