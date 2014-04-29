@@ -1,7 +1,7 @@
 mozartApp.controller('FunCtrl', function($scope, $http, mrequest){
 
     $scope.$on("UPDATE_FUN",function(event,message){
-         mrequest.do('POSS3',message).success(function(data){
+         mrequest.do('POSS3',"getFundations").success(function(data){
              //No fundation
              if(data == null) {
                 $scope.$emit("ERROR_FUN_RIGHTS","Aucune fundation trouvée. Vous n'avez pas de droits pour cette application");
