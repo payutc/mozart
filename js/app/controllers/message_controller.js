@@ -1,6 +1,6 @@
 //Receive messages and broadcast them to children. Also manages error messages
 //Mediator
-mozartApp.controller('MsgCtrl',function($scope){
+mozartApp.controller('MsgCtrl',function($scope, $modal){
     
     $scope.$on("MSG_UPDATE_FUN",function(event,message){
         $scope.ready = true;
@@ -22,10 +22,16 @@ mozartApp.controller('MsgCtrl',function($scope){
 
     */
 
-    //ERROR MESSAGES
-    //Rights error : user get 0 fundations on getFundations POST request
-    $scope.$on("ERROR_FUN_RIGHTS",function(event,message){
-        console.log(message);  
+    // Certaines erreurs sont bloquantes, et nécessite une intervention en dehors de mozart
+    // Dans ce cas la on affiche le message, ainsi qu'un bouton permettant la déconnexion 
+    // + retour sur le cas.
+    $scope.$on("CRITICAL_ERROR",function(event,message){
+        $scope.critError = message;
+        $scope.modalInstance = $modal.open({
+            templateUrl: 'modalCritError.html',
+            scope: $scope,
+            keyboard: false
+        });
     });
 
     //getArticles error : user gets 0 articles to sell for his fundation

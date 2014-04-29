@@ -14,7 +14,7 @@ mozartApp.controller('UserCtrl',function($scope, $http, $location, $window, $tim
             $scope.$emit("USER_LOGGED","");
         }).error(function(data) {
             // Error during cas ticket validation
-            $scope.$emit("ERROR_LOGIN_CAS","L'authentification CAS a échoué.");
+            $scope.$emit("CRITICAL_ERROR","L'authentification CAS a échoué.");
         });
     }
 
@@ -37,7 +37,7 @@ mozartApp.controller('UserCtrl',function($scope, $http, $location, $window, $tim
             mrequest.do('POSS3', 'loginApp', {key : localStorageService.get('applicationKey')}).success(function(data){
                 $scope.$emit("MSG_UPDATE_FUN","getFundations");
             }).error(function(data) {
-                $scope.$emit("ERROR_LOGIN_APP","L'authentification de l'app a échoué.");
+                $scope.$emit("CRITICAL_ERROR","L'authentification de l'app a échoué.");
             });
         }
     });
@@ -71,6 +71,8 @@ mozartApp.controller('UserCtrl',function($scope, $http, $location, $window, $tim
             $http.post(server_url + '/POSS3/getCasUrl').success(function(data) {
                 $window.location.href = angular.fromJson(data) + '/logout?url=' + encodeURIComponent($location.absUrl());
             });
+        }).error(function(data) {
+            $scope.$emit("CRITICAL_ERROR","L'application n'a pas pu être déclaré.");
         });
     });
 

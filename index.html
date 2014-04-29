@@ -152,6 +152,18 @@
       </script>
     </div>
 
+    <script type="text/ng-template" id="modalCritError.html">
+      <div class="modal-header">
+        <h3>Erreur Critique</h3>
+      </div>
+      <div class="modal-body">
+        <p>L'erreur suivante à eu lieu :
+        <pre>{{ critError }}</pre>
+        Si vous ne savez pas quoi faire, demandez à un responsable. Dans le cas ou aucun responsable n'est présent, vous pouvez essayer d'utiliser le bouton "déconnexion" et réessayer de vous connecter.</p>
+        <button class="btn btn-danger" ng-click="onLogoutClick()">Déconnexion</button>
+      </div>
+    </script>
+
     <script src="js/dependencies/angular.min.js"></script>
     <script src="js/dependencies/angular-local-storage.js"></script>
     <script src="js/dependencies/ui-bootstrap-tpls-0.10.0.min.js"></script>
