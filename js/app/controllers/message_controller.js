@@ -22,7 +22,6 @@ mozartApp.controller('MsgCtrl',function($scope){
 
     */
 
-
     //ERROR MESSAGES
     //Rights error : user get 0 fundations on getFundations POST request
     $scope.$on("ERROR_FUN_RIGHTS",function(event,message){
@@ -33,5 +32,9 @@ mozartApp.controller('MsgCtrl',function($scope){
     $scope.$on("ERROR_GET_ARTICLES",function(event,message){
         console.log(message);  
     });
+
+    $scope.onLogoutClick = function(){
+        $scope.$broadcast("LOGOUT","");
+    };
 });
 
