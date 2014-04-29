@@ -72,7 +72,16 @@
           <button class="btn btn-primary btn-large cancel-btn" ng-click="resetCart()" id="effacertout">Effacer toutes les lignes</button>
           <button class="btn btn-primary btn-large cancel-btn" id="annultransac" ng-click ="cancelLastOperation()">Annuler la dernière opération</button>
 
-          <div id="status" class="well">Chargement...</div>
+          <div ng-controller="StateCtrl" id="status" class="well">
+              <button type="button" ng-click="cardScanned()" class="btn btn-primary">Tap card!</button>
+            {{state}}
+            <div ng-switch="state">
+              <div ng-switch-when="userPanel">
+              </div>
+               <div ng-switch-when="transaction">
+              </div>
+            </div>
+          </div>
           <ul ng-controller="FunCtrl">
              <li ng-repeat="fun in fundations" class="ng-cloak" ng-click="funChoice(fun.fun_id)" >
               {{ fun.name }} <a href=""></a>
@@ -107,11 +116,13 @@
       </div>
     </div>
 
-    <script src="js/dependencies/angular.min.js"></script>
+    <script src="js/dependencies/angular.js"></script>
     <script src="js/dependencies/angular-local-storage.js"></script>
     <script src="js/app/app.js"></script>
     <script src="js/app/config/config.js"></script>
+    <script src="js/app/services/jcappucino_service.js"></script>
     <script src="js/app/controllers/article_controller.js"></script>
+    <script src="js/app/controllers/state_controller.js"></script>
     <script src="js/app/controllers/fundation_controller.js"></script>
     <script src="js/app/controllers/user_controller.js"></script>
     <script src="js/app/controllers/message_controller.js"></script>
