@@ -39,11 +39,14 @@ mozartApp.controller('UserCtrl',function($scope, $http, $location, $window, $tim
                });
             }
     (function poll(){
-        var currentdate = new Date(); 
-        $scope.currentTime = currentdate.getHours() + ":"  
-            + currentdate.getMinutes() + ":" 
-            + currentdate.getSeconds();
-
+        var currentdate = new Date();
+        var H = currentdate.getHours()+"";
+        var M = currentdate.getMinutes()+"";
+        var S = currentdate.getSeconds()+"";
+        if(H<10) H = "0"+H;
+        if(M<10) M = "0"+M;
+        if(S<10) S = "0"+S;
+        $scope.currentTime = H + ":" + M + ":" + S;
         $timeout(poll, 1000);
     })();
 });
