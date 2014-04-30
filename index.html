@@ -110,15 +110,11 @@
         </div>
       
         <div class="col-md-2 fill" id="tableau-categories">
-          <button class="btn btn-default"></button><br />
-          <button class="btn btn-default"></button><br />
-          <button class="btn btn-default"></button><br />
-          <button class="btn btn-default"></button><br />
-          <button class="btn btn-default"></button>
+          <button class="btn btn-default" ng-repeat="cat in store.first_cat" ng-click="store.catClick(cat.id)" ng-class="{'active': cat.id == store.cat_selected}">{{ cat.name }}</button>
         </div>
       
-        <div class="col-md-6 fill" ng-controller="ArticleCtrl" id="tableau-articles">
-          <button class="btn btn-default" ng-repeat="art in articles" ng-click="artClick(art.id)">{{ art.name }}</button>
+        <div class="col-md-6 fill" id="tableau-articles">
+          <button class="btn btn-default" ng-repeat="art in store.products" ng-click="artClick(art.id)" ng-if="art.super_parent == store.cat_selected" style="background: no-repeat center center url(http://localhost/server/web/POSS3/getImage64?img_id={{art.image}}&encode=0); background-size:contain;" ><span ng-if="!art.image" >{{ art.name }}</span></button>
         </div>
       </div><!--/row-->
     </div> <!-- /container -->

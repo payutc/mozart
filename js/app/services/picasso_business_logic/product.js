@@ -9,5 +9,5 @@ function product(id, name, categorie_id, fundation_id, price, stock, alcool, ima
     this.stock = stock;
     this.alcool = alcool;
     this.image = image;
-
+    this.super_parent = null;
 }
