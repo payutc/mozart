@@ -47,10 +47,10 @@
             <li><a href="#">{{ username }}</a></li>
             <script type="text/ng-template" id="modalNewApp.html">
               <div class="modal-header">
-                <h3>Déclaration d'une nouvelle application</h3>
+                <h3>Enregistrement de l'application</h3>
               </div>
               <div class="modal-body">
-                <p>Cette application n'est pas encore déclaré.</p>
+                <p>Cette application n'est pas enregistrée auprès de payutc.<br/>Remplissez ce formulaire puis autorisez l'application dans scoobydoo.</p>
                 <form novalidate class="form-horizontal" role="form">
                 <div class="form-group">
                   <label class="col-sm-2 control-label">Titre</label>
@@ -64,7 +64,6 @@
                     <input type="text" ng-model="app.desc" class="form-control" />
                   </div>
                 </div>
-                  <button class="btn btn-default" ng-click="reset()">RESET</button>
                   <button class="btn btn-primary" ng-click="declare(app)">Enregistrer</button>
                 </form>
               </div>

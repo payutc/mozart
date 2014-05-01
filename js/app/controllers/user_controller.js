@@ -49,13 +49,14 @@ mozartApp.controller('UserCtrl',function($scope, $http, $location, $window, $tim
         $scope.modalInstance = $modal.open({
             templateUrl: 'modalNewApp.html',
             scope: $scope,
-            keyboard: false
+            keyboard: false,
+            backdrop: 'static'
         });
     });
 
     $scope.reset = function() {
         $scope.app = {
-            title: 'Mozart - '+(new Date()).toDateString(),
+            title: 'Mozart - '+ new Date().toDateString(),
             desc: 'Déclaré par '+$scope.username
         };
     }
