@@ -145,8 +145,7 @@ border: 1px solid {{ state_bordercolor }};">
         </div>
       
         <div class="col-md-6 fill" id="tableau-articles">
-          <button class="btn btn-default" ng-repeat="art in store.products" ng-click="artClick(art.id)" ng-if="art.image" ng-hide="art.super_parent != store.cat_selected" style="background: no-repeat center center url({{ server }}POSS3/getImage64?img_id={{art.image}}&encode=0); background-size:contain;"></button>
-          <button class="btn btn-default" ng-repeat="art in store.products" ng-click="artClick(art.id)" ng-if="!art.image" ng-hide="art.super_parent != store.cat_selected">{{ art.name }}</button>
+          <button class="btn btn-default" ng-repeat="art in store.products" ng-click="artClick(art.id)" ng-hide="art.super_parent != store.cat_selected" ng-attr-style="{{ art.image && 'background-image: url('+server+'POSS3/getImage64?img_id='+art.image+'&encode=0);' }}">{{ !art.image && art.name || "" }}</button>
         </div>
       </div><!--/row-->
     </div> <!-- /container -->
@@ -171,11 +170,11 @@ border: 1px solid {{ state_bordercolor }};">
         </div>
         <div class="modal-body">
           <p>Tu as le droit de vendre pour plusieurs fundations.<br/>Merci d'en choisir une pour cette session :</p>
-          <ul>
-            <li ng-repeat="fun in fundations">
-              <a ng-click="funChoice(fun.fun_id)" href="#">{{ fun.name }}</a>
-            </li>
-          </ul>  
+          <p>
+            <span ng-repeat="fun in fundations">
+              <button class="btn btn-primary" ng-click="funChoice(fun.fun_id)">{{ fun.name }}</button>&nbsp;
+            </span>
+          </p>
         </div>
       </script>
     </div>
