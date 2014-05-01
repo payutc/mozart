@@ -1,6 +1,6 @@
 //Receive messages and broadcast them to children. Also manages error messages
 //Mediator
-mozartApp.controller('MsgCtrl',function($scope, $modal){
+mozartApp.controller('MsgCtrl',function($scope, $modal, $window){
     
     $scope.$on("MSG_UPDATE_FUN",function(event,message){
         $scope.ready = true;
@@ -30,8 +30,12 @@ mozartApp.controller('MsgCtrl',function($scope, $modal){
         $scope.modalInstance = $modal.open({
             templateUrl: 'modalCritError.html',
             scope: $scope,
-            keyboard: false
+            keyboard: false,
+            backdrop: 'static'
         });
+        $scope.reload = function() {
+          $window.location.reload();
+        }
     });
 
     //getArticles error : user gets 0 articles to sell for his fundation
