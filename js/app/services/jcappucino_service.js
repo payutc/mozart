@@ -5,12 +5,6 @@ mozartApp.factory('JCappucinoService', function() {
         callback: {}
     };
 
-    //MOCKS while waiting that jcappucino works on Windows
-
-    service.mockCard = function() {
-        return "76E4BF3F";
-    }
-
     service.connect = function() {
         if(service.ws) { return; }
 
