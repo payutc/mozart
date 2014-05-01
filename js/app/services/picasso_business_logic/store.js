@@ -6,6 +6,7 @@ function store() {
     this.cat_selected = null;
     this.categories = {};
     this.first_cat = {};
+    this.fun_id = null;
 }
 
 store.prototype.getProduct = function (id) {
@@ -29,6 +30,9 @@ store.prototype.addCategory = function(cat) {
     this.categories[cat.id] = cat;
     if(cat.parent_id == null) {
         this.first_cat[cat.id] = cat;
+        if(this.cat_selected == null) {
+            this.cat_selected = cat.id;
+        }
     }
 }
 
@@ -41,7 +45,7 @@ store.prototype.getParent = function(catId) {
 }
 
 store.prototype.catClick = function(catId) {
-    this.cat_selected = catId;
+    this.cat_selected = catId;  
     for (var i in this.products) {
         if(!this.products[i].super_parent) {
             this.products[i].super_parent = this.getParent(this.products[i].categorie_id);

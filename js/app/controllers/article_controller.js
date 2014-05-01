@@ -5,6 +5,7 @@ mozartApp.controller('ArticleCtrl',function($scope, $http, mrequest, localStorag
     // Just in case, clearing the cart
     $scope.cart.clearItems();
     $scope.$on("GET_ARTICLES",function(event,message){
+        $scope.store.fun_id = message;
         mrequest.do('POSS3','getArticles', {fun_id : message}).success(function(data){
             if(data == null) {
                 $scope.$emit("ERROR_GET_ARTICLES", "Aucun article à vendre!");
@@ -24,8 +25,8 @@ mozartApp.controller('ArticleCtrl',function($scope, $http, mrequest, localStorag
             for(var i=0; i<data.length; i++) {
                 $scope.store.addCategory(data[i]);
             }
-            $scope.store.catClick(data[0].id);
         });
+        setTimeout(function() { $scope.store.catClick($scope.store.cat_selected); }, 1000);
     });
 
 
@@ -34,8 +35,6 @@ mozartApp.controller('ArticleCtrl',function($scope, $http, mrequest, localStorag
         product = $scope.store.getProduct(artId)
         // Add product to cart
         $scope.cart.addItem(product['id'], product['name'], product['price'], 1)
-        // Debug
-        console.log($scope.cart.items)
     }
 
     $scope.resetCart = function(){
