@@ -1,41 +1,99 @@
 // I'll merge TransactionCtrl and StateCtrl ? What about the Single responsibility principle?
-mozartApp.controller('StateCtrl', function($scope, $http, mrequest, JCappucinoService, DataService){
-    $scope.state = "chargement";
+mozartApp.controller('StateCtrl', function($scope, $http, $modal, $timeout, mrequest, JCappucinoService, DataService){
+    $scope.state = "Chargement...";
+    $scope.state_bgcolor = "#f5f5f5";
+    $scope.state_bordercolor = "#e3e3e3";
     $scope.cart = DataService.cart;
-    $scope.dev_mode = DEV_MODE;
+    $scope.store = DataService.store;
       
-    $scope.cardScanned = function(){
-        console.log("A card has been scanned!");
-        $scope.badge_id = JCappucinoService.mockCard();
-        console.log("badge id is " + $scope.badge_id)
-        console.log($scope.cart.items);
+    resetColor = function(t) {
+        setTimeout(function() {
+            $scope.state = "Prêt...";
+            $scope.state_bgcolor = "#f5f5f5";
+            $scope.state_bordercolor = "#e3e3e3";
+        }, t);
+    }
+
+    handleError = function(data) {
+        if(data.error) {
+            $scope.state = data.error.message;
+        } else {
+            $scope.state = "Erreur réseau !";
+        }
+        $scope.state_bgcolor = "#f50000";
+        $scope.state_bordercolor = "#e30000";
+        resetColor(4000);
+    }
+
+    JCappucinoService.subscribe("cardInserted", function(badge_id) {
         if($scope.cart.items.length == 0){
-            $scope.state = 'userPanel';
+            $scope.state = 'Récupération des infos utilisateur...';
+            $scope.badge_id = badge_id;
             // panel should display user info (solde) to fetch from server
-            mrequest.do('POSS3', 'getBuyerInfo', { badge_id: $scope.badge_id } ).success( function(data){
-              console.log("user info");
-              console.log(data);
+            mrequest.do('POSS3', 'getBuyerInfo', { badge_id: badge_id } ).success( function(data){
+                $scope.user = data;
+                $scope.user.last_purchases.reverse();
+                $scope.modalInstance = $modal.open({
+                    templateUrl: 'modalUser.html',
+                    scope: $scope,
+                    keyboard: true
+                });
+                resetColor();
+            }).error(function(data) {
+                handleError(data);
             });
-            // $scope.solde = 
-            // and allow cancelling last operations 
          }
         else {
-            $scope.state = 'transaction';
-            //Commit the transaction
+            $scope.state = 'Transaction en cours...';
+            mrequest.do('POSS3', 'transaction', { fun_id: $scope.store.fun_id, badge_id: badge_id, obj_ids: $scope.cart.formatPoss3() } ).success( function(data){
+                $scope.state = 'Transaction réussi...';
+                $scope.state_bgcolor = "#00f500";
+                $scope.state_bordercolor = "#00e300";
+                resetColor(2000);
+            }).error(function(data) {
+                handleError(data);
+            });
         }
-     }
+     });
 
-     $scope.cancelTransaction = function(){
-        //Cancel a given past transaction
-     }
+    $scope.cancelTransaction = function(pur_id){
+        var pur = null;
+        for(var i = 0; i < $scope.user.last_purchases.length; i++) {
+            if($scope.user.last_purchases[i].pur_id == pur_id) {
+                pur = $scope.user.last_purchases[i];
+                break;
+            }
+        }
+        mrequest.do('POSS3', 'cancel', { fun_id: $scope.store.fun_id, pur_id: pur_id } ).success( function(data){
+            $scope.user.solde = (1 * $scope.user.solde) + (1 * pur.pur_price);
+            $scope.user.last_purchases.splice(i, 1);
+        }).error(function(data) {
+        });
+    }
 
-  // When JCappucino is ready integrate code here
-  //JCappucinoService.subscribe("pong", function(message) {
-    //$scope.state = message;
-    //console.log($scope.state);
-    // if cart is empty, display the user info control (user credit, cancel operations etc)
-    //else try and pay up the cart (TransactionCtrl)
-    // use broadcast, emit , on etc to communicate between controllers
-  });
+    JCappucinoService.subscribe("onopen", function(message) {
+        $scope.state = "Prêt...";
+    });
 
-//});
+    JCappucinoService.subscribe("onerror", function(message) {
+        $scope.state = "Erreur de communication avec la badgeuse et l'imprimante !";
+        $scope.state_bgcolor = "#f50000";
+        $scope.state_bordercolor = "#e30000";
+    });
+
+    // Check that connection with server always exist
+    // If no go back to CAS.
+    function poll(){
+        mrequest.do('KEY', 'getStatus', {}).success(function(data){
+            if(!data.user || !data.application) {
+                $scope.$emit("CRITICAL_ERROR","La session a expiré !");
+                return;
+            }
+            $timeout(poll, 30000);
+        }).error(function(data) {
+            handleError("");
+            $timeout(poll, 4000);
+        });
+    };
+    $timeout(poll, 4000);
+});

@@ -9,18 +9,18 @@ mozartApp.controller('FunCtrl', function($scope, $http, $modal, mrequest){
                 if(data.length == 1) {
                     // Only one fundation, select it
                     $scope.$emit("MSG_GET_ARTICLES",data[0].fun_id);
-            } else {
-                if(data[0].fun_id == null) {
-                    data.shift();
-                }
-                $scope.fundations = data;
+                } else {
+                    if(data[0].fun_id == null) {
+                        data.shift();
+                    }
+                    $scope.fundations = data;
 
-                $scope.modalInstance = $modal.open({
-                    templateUrl: 'modalFunCtrl.html',
-                    scope: $scope,
-                    keyboard: false
-                });
-            }
+                    $scope.modalInstance = $modal.open({
+                        templateUrl: 'modalFunCtrl.html',
+                        scope: $scope,
+                        keyboard: false
+                    });
+                }
             }
         }).error(function(data) {
             $scope.$emit("CRITICAL_ERROR","Aucune fundation trouvée. Vous et/ou cette application n'avez pas de droits de vente.");
