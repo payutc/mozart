@@ -9,6 +9,10 @@ html, body {
 #tableau-articles button {
   width: 19%;
   height: 16.67%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  white-space: normal;
 }
 #tableau-categories button {
   width: 100%;
