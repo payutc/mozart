@@ -30,7 +30,7 @@ store.prototype.addCategory = function(cat) {
     this.categories[cat.id] = cat;
     if(cat.parent_id == null) {
         this.first_cat[cat.id] = cat;
-        if(this.cat_selected == null) {
+        if(this.cat_selected == -1) {
             this.cat_selected = cat.id;
         }
     }
