@@ -171,11 +171,11 @@ border: 1px solid {{ state_bordercolor }};">
         </div>
         <div class="modal-body">
           <p>Tu as le droit de vendre pour plusieurs fundations.<br/>Merci d'en choisir une pour cette session :</p>
-          <ul>
-            <li ng-repeat="fun in fundations">
-              <a ng-click="funChoice(fun.fun_id)" href="#">{{ fun.name }}</a>
-            </li>
-          </ul>  
+          <p>
+            <span ng-repeat="fun in fundations">
+              <button class="btn btn-primary" ng-click="funChoice(fun.fun_id)">{{ fun.name }}</button>&nbsp;
+            </span>
+          </p>
         </div>
       </script>
     </div>
