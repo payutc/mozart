@@ -27,6 +27,7 @@ mozartApp.controller('ArticleCtrl',function($scope, $http, mrequest, localStorag
             for(var i=0; i<data.length; i++) {
                 $scope.store.addCategory(data[i]);
             }
+            $scope.categoryCount = Object.keys($scope.store.first_cat).length;
         });
         setTimeout(function() { $scope.store.catClick($scope.store.cat_selected); }, 1000);
     });
