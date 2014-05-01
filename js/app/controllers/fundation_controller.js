@@ -18,7 +18,8 @@ mozartApp.controller('FunCtrl', function($scope, $http, $modal, mrequest){
                     $scope.modalInstance = $modal.open({
                         templateUrl: 'modalFunCtrl.html',
                         scope: $scope,
-                        keyboard: false
+                        keyboard: false,
+                        backdrop: 'static'
                     });
                 }
             }

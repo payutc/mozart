@@ -76,51 +76,62 @@
 
     <div class="fluid-container fill ng-cloak" ng-controller="ArticleCtrl" ng-hide="!ready">
       <div class="row fill">
-        <div class="col-md-4" style="height: 100%;">
-          <div class="col-md-12">
-            <table class="table table-striped" id="table-panier">
-              <thead>
-                <tr>
-                  <th class="nom">Nom</th>
-                  <th class="qte">Qté</th>
-                  <th class="prix">Prix</th>
-                </tr>
-              </thead>
-              <tbody id="lignes"> 
-                <tr ng-repeat="cartItem in cart.items">
-                  <td> {{ cartItem.name }} </td><td> {{cartItem.quantity}} </td><td> {{cartItem.price * cartItem.quantity / 100}} € </td>
-                </tr>
-                <tr><td><b>Total : {{cart.getTotalCount()}}</b> Articles</td><td></td><td><b>{{cart.getTotalPrice() / 100}} €</b></td></tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="col-md-12" style="position: absolute; bottom:0px;">
-              <button class="btn btn-primary btn-large cancel-btn" ng-click="resetCart()" id="effacertout">Effacer toutes les lignes</button>
-              <button class="btn btn-primary btn-large cancel-btn" id="annultransac" ng-click ="cancelLastOperation()">Annuler la dernière opération</button>
+        <div class="col-md-4 fill">
+          <table class="table table-striped table-panier">
+            <thead>
+              <tr>
+                <th>Qté</th>
+                <th>Nom</th>
+                <th>Prix</th>
+              </tr>
+            </thead>
+            <tbody id="lignes"> 
+              <tr ng-repeat="cartItem in cart.items">
+                <td>{{ cartItem.quantity }}</td>
+                <td>{{ cartItem.name }}</td>
+                <td>{{ cartItem.price * cartItem.quantity / 100 }} €</td>
+              </tr>
+            </tbody>
+          </table>
+          <table class="table table-striped table-paniersum">
+            <tbody>
+              <tr>
+                <td>
+                  <ng-pluralize count="cart.getTotalCount()"
+                                  when="{'0': 'Aucun article',
+                                         'one': '1 article',
+                                         'other': '{} articles'}">
+                  </ng-pluralize>
+                </td>
+                <td><b>{{ cart.getTotalPrice() / 100 }} €</b></td>
+              </tr>
+            </tbody>
+          </table>
+          <button class="btn btn-primary btn-large cancel-btn" ng-click="resetCart()" id="effacertout">Effacer toutes les lignes</button>
+          <button class="btn btn-primary btn-large cancel-btn" id="annultransac" ng-click ="cancelLastOperation()">Annuler la dernière opération</button>
 
-              <div ng-controller="StateCtrl" id="status" class="well" style="background-color: {{ state_bgcolor }};
-border: 1px solid {{ state_bordercolor }};" >
-                {{state}}
-                <script type="text/ng-template" id="modalUser.html">
-                  <div class="modal-header">
-                    <h3>{{ user.firstname }} {{ user.lastname }}</h3>
-                    <p>Solde : {{ user.solde / 100 }} €</p>
-                  </div>
-                  <div class="modal-body">
-                    <table class="table table-striped" ng-if="user.last_purchases">
-                      <thead>
-                        <th>Article</th><th>Quantité</th><th>Prix</th><th></th>
-                      </thead>
-                      <tbody>
-                        <tr ng-repeat="last in user.last_purchases"><td>{{ store.products[last.obj_id].name }}</td><td>{{ last.pur_qte }}</td><td>{{ last.pur_price / 100 }} €</td><td><button class="btn btn-danger" ng-click="cancelTransaction(last.pur_id)">Annuler</button></td></tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <div class="modal-footer">
-                      <button class="btn btn-primary" ng-click="modalInstance.close()">Fermer</button>
-                  </div>
-                </script>
+          <div ng-controller="StateCtrl" id="status" class="well" style="background-color: {{ state_bgcolor }};
+border: 1px solid {{ state_bordercolor }};">
+            {{state}}
+            <script type="text/ng-template" id="modalUser.html">
+              <div class="modal-header">
+                <h3>{{ user.firstname }} {{ user.lastname }}</h3>
+                <p>Solde : {{ user.solde / 100 }} €</p>
               </div>
+              <div class="modal-body">
+                <table class="table table-striped" ng-if="user.last_purchases">
+                  <thead>
+                    <th>Article</th><th>Quantité</th><th>Prix</th><th></th>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="last in user.last_purchases"><td>{{ store.products[last.obj_id].name }}</td><td>{{ last.pur_qte }}</td><td>{{ last.pur_price / 100 }} €</td><td><button class="btn btn-danger" ng-click="cancelTransaction(last.pur_id)">Annuler</button></td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="modal-footer">
+                  <button class="btn btn-primary" ng-click="modalInstance.close()">Fermer</button>
+              </div>
+            </script>
           </div>
         </div>
       
