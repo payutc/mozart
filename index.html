@@ -35,7 +35,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">mozart by payutc</a>
+          <a class="navbar-brand" href="#">mozart <small>by</small> <img src="img/payutc_rect_110.png" alt="payutc"></a>
         </div>
         <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
           <form class="navbar-form navbar-right">
@@ -115,16 +115,21 @@ border: 1px solid {{ state_bordercolor }};">
             {{state}}
             <script type="text/ng-template" id="modalUser.html">
               <div class="modal-header">
-                <h3>{{ user.firstname }} {{ user.lastname }}</h3>
-                <p>Solde : {{ user.solde / 100 }} €</p>
+                <h3>Compte de {{ user.firstname }} {{ user.lastname }}</h3>
+                <p>Solde payutc : {{ formatPrix(user.solde) }}</p>
               </div>
               <div class="modal-body">
                 <table class="table table-striped" ng-if="user.last_purchases">
                   <thead>
-                    <th>Article</th><th>Quantité</th><th>Prix</th><th></th>
+                    <th>Quantité</th><th>Article</th><th>Prix</th><th></th>
                   </thead>
                   <tbody>
-                    <tr ng-repeat="last in user.last_purchases"><td>{{ store.products[last.obj_id].name }}</td><td>{{ last.pur_qte }}</td><td>{{ last.pur_price / 100 }} €</td><td><button class="btn btn-danger" ng-click="cancelTransaction(last.pur_id)">Annuler</button></td></tr>
+                    <tr ng-repeat="last in user.last_purchases">
+                      <td>{{ last.pur_qte }}</td>
+                      <td>{{ store.products[last.obj_id].name }}</td>
+                      <td>{{ formatPrix(last.pur_price) }}</td>
+                      <td><button class="btn btn-danger" ng-click="cancelTransaction(last.pur_id)">Annuler</button></td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -140,8 +145,8 @@ border: 1px solid {{ state_bordercolor }};">
         </div>
       
         <div class="col-md-6 fill" id="tableau-articles">
-          <button class="btn btn-default" ng-repeat="art in store.products" ng-click="artClick(art.id)" ng-if="art.image" ng-hide="art.super_parent != store.cat_selected" style="background: no-repeat center center url({{ server }}POSS3/getImage64?img_id={{art.image}}&encode=0); background-size:contain;" ></button>
-          <button class="btn btn-default" ng-repeat="art in store.products" ng-click="artClick(art.id)" ng-if="!art.image" ng-hide="art.super_parent != store.cat_selected" >{{ art.name }}</button>
+          <button class="btn btn-default" ng-repeat="art in store.products" ng-click="artClick(art.id)" ng-if="art.image" ng-hide="art.super_parent != store.cat_selected" style="background: no-repeat center center url({{ server }}POSS3/getImage64?img_id={{art.image}}&encode=0); background-size:contain;"></button>
+          <button class="btn btn-default" ng-repeat="art in store.products" ng-click="artClick(art.id)" ng-if="!art.image" ng-hide="art.super_parent != store.cat_selected">{{ art.name }}</button>
         </div>
       </div><!--/row-->
     </div> <!-- /container -->

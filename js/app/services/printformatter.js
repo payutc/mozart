@@ -75,7 +75,7 @@ mozartApp.factory('PrintFormatter', ['DataService', function(DataService){
         var product = products[i],
         	  total_temp = product.pur_price/100,
         	  espace_dizaine = product.pur_qte > 9 ? "" : " ";
-   	  console.log(DataService.store.products[product.obj_id]);
+
         var ligne = espace_dizaine + product.pur_qte + " " + DataService.store.products[product.obj_id].name + PRINTER.formatPrix(total_temp);
     
         txt += espace_dizaine + product.pur_qte + " " + DataService.store.products[product.obj_id].name;

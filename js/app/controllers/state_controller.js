@@ -5,10 +5,12 @@ mozartApp.controller('StateCtrl', function($scope, $http, $modal, $timeout, mreq
     $scope.state_bordercolor = "#e3e3e3";
     $scope.cart = DataService.cart;
     $scope.store = DataService.store;
+    
+    $scope.formatPrix = function(price) { return PrintFormatter.formatPrix(price/100); }
       
     resetColor = function(t) {
         setTimeout(function() {
-            $scope.state = "Prêt...";
+            $scope.state = "Prêt";
             $scope.state_bgcolor = "#f5f5f5";
             $scope.state_bordercolor = "#e3e3e3";
         }, t);

@@ -31,6 +31,7 @@ html, body {
 }
 .table-panier thead th:nth-child(3), .table-panier tbody td:nth-child(3) {
 	width: 20%;
+  text-align: right;
 }
 
 .table-paniersum tbody td:nth-child(1) {
@@ -38,6 +39,7 @@ html, body {
 }
 .table-paniersum tbody td:nth-child(2) {
 	width: 20%;
+  text-align: right;
 }
 
 #status {
@@ -63,4 +65,12 @@ body {
   padding-right: 15px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.navbar-brand {
+  padding: 10px 20px;
+}
+
+.navbar-brand img {
+  height: 30px;
 }
