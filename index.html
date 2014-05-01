@@ -150,13 +150,13 @@ border: 1px solid {{ state_bordercolor }};" >
     <div ng-controller="FunCtrl">
       <script type="text/ng-template" id="modalFunCtrl.html">
         <div class="modal-header">
-          <h3>Choix de fundation</h3>
+          <h3>Choix de la fundation</h3>
         </div>
         <div class="modal-body">
-          <p>Vous avez les droits sur plusieurs fundations, merci de choisir celle pour laquelle vous voullez vendre :</p>
-          <ul >
-            <li ng-repeat="fun in fundations" class="ng-cloak" ng-click="funChoice(fun.fun_id)" >
-              <button class="btn btn-primary">{{ fun.name }}</button>
+          <p>Tu as le droit de vendre pour plusieurs fundations.<br/>Merci d'en choisir une pour cette session :</p>
+          <ul>
+            <li ng-repeat="fun in fundations">
+              <a ng-click="funChoice(fun.fun_id)" href="#">{{ fun.name }}</a>
             </li>
           </ul>  
         </div>
