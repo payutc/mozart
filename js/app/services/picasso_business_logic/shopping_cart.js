@@ -37,6 +37,9 @@ shoppingCart.prototype.addItem = function (id, name, price, quantity) {
 
 // Reduce quantity of last item by 1. If quantity = 0 remove item from the cart
 shoppingCart.prototype.cancelLastItem = function() {
+    if(this.history.length == 0) {
+        return;
+    }
     var last_item_id = this.history.pop();
     for(var i=0; i<this.items.length; i++) {
         var last_item = this.items[i];
