@@ -89,7 +89,7 @@
               <tr ng-repeat="cartItem in cart.items">
                 <td>{{ cartItem.quantity }}</td>
                 <td>{{ cartItem.name }}</td>
-                <td>{{ cartItem.price * cartItem.quantity / 100 }} €</td>
+                <td>{{ formatPrix(cartItem.price * cartItem.quantity) }}</td>
               </tr>
             </tbody>
           </table>
@@ -103,7 +103,7 @@
                                          'other': '{} articles'}">
                   </ng-pluralize>
                 </td>
-                <td><b>{{ cart.getTotalPrice() / 100 }} €</b></td>
+                <td><b>{{ formatPrix(cart.getTotalPrice()) }}</b></td>
               </tr>
             </tbody>
           </table>

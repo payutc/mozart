@@ -1,7 +1,8 @@
-mozartApp.controller('ArticleCtrl',function($scope, $http, mrequest, localStorageService, DataService){
+mozartApp.controller('ArticleCtrl',function($scope, $http, mrequest, localStorageService, DataService, PrintFormatter){
     $scope.store = DataService.store;
     $scope.cart = DataService.cart;
     $scope.server = server_url;
+    $scope.formatPrix = function(price) { return PrintFormatter.formatPrix(price/100); }
 
     // Just in case, clearing the cart
     $scope.cart.clearItems();
