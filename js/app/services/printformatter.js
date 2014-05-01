@@ -1,5 +1,5 @@
 // Websocket for reading cards and printing
-mozartApp.factory('PrintFormatter', function() {
+mozartApp.factory('PrintFormatter', ['DataService', function(DataService){
 
     var PRINTER = {};
 
@@ -9,11 +9,11 @@ mozartApp.factory('PrintFormatter', function() {
 
     //+ Jonas Raoni Soares Silva
     //@ http://jsfromhell.com/string/wordwrap [rev. #2]
-    PRINTER.wordWrap = function(m, b, c){
+    PRINTER.wordWrap = function(txt, m, b, c){
         var i, j, l, s, r;
         if(m < 1)
-            return this;
-        for(i = -1, l = (r = this.split("\n")).length; ++i < l; r[i] += s)
+            return txt;
+        for(i = -1, l = (r = txt.split("\n")).length; ++i < l; r[i] += s)
             for(s = r[i], r[i] = ""; s.length > m; r[i] += s.slice(0, j) + ((s = s.slice(j)).length ? b : ""))
                 j = c == 2 || (j = s.slice(0, m + 1).match(/\S*(\s)?$/))[1] ? m : j.input.length - j[0].length
                 || c == 1 && m || j.input.length + (j = s.slice(m).match(/^\S*/)).input.length;
@@ -61,7 +61,8 @@ mozartApp.factory('PrintFormatter', function() {
     	return PRINTER.repeat(" ", Math.round(taille/2 - txt.length/2)) + txt;
     }
 
-    PRINTER.Ticket = function(products, infos) {
+    PRINTER.Ticket = function(infos) {
+      var products = infos.purchases;
     	var total = 0, txt = "";
 
     	txt += PRINTER.codes.lineFeed;
@@ -72,12 +73,12 @@ mozartApp.factory('PrintFormatter', function() {
 
     	for(var i=0; i < products.length; i++){
         var product = products[i],
-        	  total_temp = product.prix*product.quantite/100,
-        	  espace_dizaine = product.quantite > 9 ? "" : " ";
-   	
-        var ligne = espace_dizaine + product.quantite + " " + product.nom + PRINTER.formatPrix(total_temp);
+        	  total_temp = product.pur_price/100,
+        	  espace_dizaine = product.pur_qte > 9 ? "" : " ";
+   	  console.log(DataService.store.products[product.obj_id]);
+        var ligne = espace_dizaine + product.pur_qte + " " + DataService.store.products[product.obj_id].name + PRINTER.formatPrix(total_temp);
     
-        txt += espace_dizaine + product.quantite + " " + product.nom;
+        txt += espace_dizaine + product.pur_qte + " " + DataService.store.products[product.obj_id].name;
         txt += PRINTER.repeat(" ", PRINTER.nbCols - ligne.length)
         txt += PRINTER.formatPrix(total_temp);
         txt += PRINTER.codes.lineFeed;
@@ -146,4 +147,4 @@ mozartApp.factory('PrintFormatter', function() {
     }
 
     return PRINTER;
-});
+}]);
