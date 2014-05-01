@@ -1,11 +1,30 @@
 // I'll merge TransactionCtrl and StateCtrl ? What about the Single responsibility principle?
-mozartApp.controller('StateCtrl', function($scope, $http, $modal, mrequest, JCappucinoService, DataService){
+mozartApp.controller('StateCtrl', function($scope, $http, $modal, $timeout, mrequest, JCappucinoService, DataService){
     $scope.state = "Chargement...";
     $scope.state_bgcolor = "#f5f5f5";
     $scope.state_bordercolor = "#e3e3e3";
     $scope.cart = DataService.cart;
     $scope.store = DataService.store;
       
+    resetColor = function(t) {
+        setTimeout(function() {
+            $scope.state = "Prêt...";
+            $scope.state_bgcolor = "#f5f5f5";
+            $scope.state_bordercolor = "#e3e3e3";
+        }, t);
+    }
+
+    handleError = function(data) {
+        if(data.error) {
+            $scope.state = data.error.message;
+        } else {
+            $scope.state = "Erreur réseau !";
+        }
+        $scope.state_bgcolor = "#f50000";
+        $scope.state_bordercolor = "#e30000";
+        resetColor(4000);
+    }
+
     JCappucinoService.subscribe("cardInserted", function(badge_id) {
         if($scope.cart.items.length == 0){
             $scope.state = 'Récupération des infos utilisateur...';
@@ -19,11 +38,9 @@ mozartApp.controller('StateCtrl', function($scope, $http, $modal, mrequest, JCap
                     scope: $scope,
                     keyboard: true
                 });
+                resetColor();
             }).error(function(data) {
-                $scope.state = data.error.message;
-                $scope.state_bgcolor = "#f50000";
-                $scope.state_bordercolor = "#e30000";
-                $scope.resetColor(4000);
+                handleError(data);
             });
          }
         else {
@@ -32,23 +49,12 @@ mozartApp.controller('StateCtrl', function($scope, $http, $modal, mrequest, JCap
                 $scope.state = 'Transaction réussi...';
                 $scope.state_bgcolor = "#00f500";
                 $scope.state_bordercolor = "#00e300";
-                $scope.resetColor(2000);
+                resetColor(2000);
             }).error(function(data) {
-                $scope.state = data.error.message;
-                $scope.state_bgcolor = "#f50000";
-                $scope.state_bordercolor = "#e30000";
-                $scope.resetColor(4000);
+                handleError(data);
             });
         }
      });
-
-    $scope.resetColor = function(t) {
-        setTimeout(function() {
-            $scope.state = "Prêt...";
-            $scope.state_bgcolor = "#f5f5f5";
-            $scope.state_bordercolor = "#e3e3e3";
-        }, t);
-    }
 
     $scope.cancelTransaction = function(pur_id){
         var pur = null;
@@ -70,25 +76,24 @@ mozartApp.controller('StateCtrl', function($scope, $http, $modal, mrequest, JCap
     });
 
     JCappucinoService.subscribe("onerror", function(message) {
-        $scope.state = "Erreur de communication...";
+        $scope.state = "Erreur de communication avec la badgeuse et l'imprimante !";
         $scope.state_bgcolor = "#f50000";
         $scope.state_bordercolor = "#e30000";
-        $scope.resetColor(4000);
     });
+
+    // Check that connection with server always exist
+    // If no go back to CAS.
+    function poll(){
+        mrequest.do('KEY', 'getStatus', {}).success(function(data){
+            if(!data.user || !data.application) {
+                $scope.$emit("CRITICAL_ERROR","La session a expiré !");
+                return;
+            }
+            $timeout(poll, 30000);
+        }).error(function(data) {
+            handleError("");
+            $timeout(poll, 4000);
+        });
+    };
+    $timeout(poll, 4000);
 });
-
-var ModalInstanceCtrl = function ($scope, $modalInstance, items) {
-
-  $scope.items = items;
-  $scope.selected = {
-    item: $scope.items[0]
-  };
-
-  $scope.ok = function () {
-    $modalInstance.close($scope.selected.item);
-  };
-
-  $scope.cancel = function () {
-    $modalInstance.dismiss('cancel');
-  };
-};

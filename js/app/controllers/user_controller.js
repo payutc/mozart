@@ -25,6 +25,8 @@ mozartApp.controller('UserCtrl',function($scope, $http, $location, $window, $tim
             $scope.username = data.user_data.firstname +' '+ data.user_data.lastname;
             // Request login app
             $scope.$emit("LOG_APP","");
+        }).error(function(data) {
+            $scope.$emit("CRITICAL_ERROR","Impossible de vérifier le status de la connexion.");
         });
     });
 
