@@ -50,7 +50,7 @@
                 <h3>Enregistrement de l'application</h3>
               </div>
               <div class="modal-body">
-                <p>Cette application n'est pas enregistrée auprès de payutc.<br/>Remplissez ce formulaire puis autorisez l'application dans scoobydoo.</p>
+                <p>Cette application n'est pas enregistrée auprès de payutc.<br/>Remplis ce formulaire en précisant bien le nom/lieu de la machine puis ajoute-lui des droits dans scoobydoo.</p>
                 <form novalidate class="form-horizontal" role="form">
                 <div class="form-group">
                   <label class="col-sm-2 control-label">Titre</label>
@@ -165,12 +165,14 @@ border: 1px solid {{ state_bordercolor }};" >
 
     <script type="text/ng-template" id="modalCritError.html">
       <div class="modal-header">
-        <h3>Erreur Critique</h3>
+        <h3>Erreur fatale</h3>
       </div>
       <div class="modal-body">
-        <p>L'erreur suivante à eu lieu :
-        <pre>{{ critError }}</pre>
-        Si vous ne savez pas quoi faire, demandez à un responsable. Dans le cas ou aucun responsable n'est présent, vous pouvez essayer d'utiliser le bouton "déconnexion" et réessayer de vous connecter.</p>
+        <p>
+          L'erreur suivante a eu lieu : <pre>{{ critError }}</pre>
+        </p>
+        <p>Tu peux essayer de recharger la page ou de te connecter à nouveau.</p>
+        <p>Si le problème persiste, contacte un responsable ou l'équipe de payutc.</p>
         <button class="btn btn-danger" ng-click="onLogoutClick()">Déconnexion</button>
       </div>
     </script>

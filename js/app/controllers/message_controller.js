@@ -30,7 +30,8 @@ mozartApp.controller('MsgCtrl',function($scope, $modal){
         $scope.modalInstance = $modal.open({
             templateUrl: 'modalCritError.html',
             scope: $scope,
-            keyboard: false
+            keyboard: false,
+            backdrop: 'static'
         });
     });
 
