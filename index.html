@@ -141,7 +141,7 @@ border: 1px solid {{ state_bordercolor }};">
         </div>
       
         <div class="col-md-2 fill" id="tableau-categories">
-          <button class="btn btn-default" ng-repeat="cat in store.first_cat" ng-click="store.catClick(cat.id)" ng-class="{'active': cat.id == store.cat_selected}">{{ cat.name }}</button>
+          <button class="btn btn-default" ng-repeat="cat in store.first_cat" ng-click="store.catClick(cat.id)" ng-class="{'active': cat.id == store.cat_selected}" ng-attr-style="height: {{ categoryCount > 0 ? 100/categoryCount : 100 }}%">{{ cat.name }}</button>
         </div>
       
         <div class="col-md-6 fill" id="tableau-articles">
