@@ -6,8 +6,6 @@ mozartApp.factory('JCappucinoService', function() {
     };
 
     service.connect = function() {
-        if(service.ws) { return; }
-
         var ws = new WebSocket(JCAPPUCINO_APPLET);
 
         var handle = function(event, message) {
@@ -22,6 +20,10 @@ mozartApp.factory('JCappucinoService', function() {
 
         ws.onerror = function() {
             handle("onerror", "");
+        };
+
+        ws.onclose = function() {
+            handle("onclose", "");
         };
 
         ws.onmessage = function(message) {
