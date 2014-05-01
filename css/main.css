@@ -19,19 +19,27 @@ html, body {
 	height: 50px;
 	margin-bottom: .1em;
 }
-#table-panier {
+.table-panier {
 	width: 100%;
 	table-layout: fixed;
 }
-#table-panier th.nom {
+.table-panier thead th:nth-child(2), .table-panier tbody td:nth-child(2) {
 	width: 70%;
 }
-#table-panier th.qte {
+.table-panier thead th:nth-child(1), .table-panier tbody td:nth-child(1) {
 	width: 10%;
 }
-#table-panier th.prix {
+.table-panier thead th:nth-child(3), .table-panier tbody td:nth-child(3) {
 	width: 20%;
 }
+
+.table-paniersum tbody td:nth-child(1) {
+	width: 80%;
+}
+.table-paniersum tbody td:nth-child(2) {
+	width: 20%;
+}
+
 #status {
   margin-top: 10px;
 }
