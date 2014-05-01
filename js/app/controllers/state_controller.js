@@ -1,5 +1,5 @@
 // I'll merge TransactionCtrl and StateCtrl ? What about the Single responsibility principle?
-mozartApp.controller('StateCtrl', function($scope, $http, $modal, $timeout, mrequest, JCappucinoService, DataService){
+mozartApp.controller('StateCtrl', function($scope, $http, $modal, $timeout, mrequest, JCappucinoService, DataService, PrintFormatter){
     $scope.state = "Chargement...";
     $scope.state_bgcolor = "#f5f5f5";
     $scope.state_bordercolor = "#e3e3e3";
@@ -46,6 +46,8 @@ mozartApp.controller('StateCtrl', function($scope, $http, $modal, $timeout, mreq
         else {
             $scope.state = 'Transaction en cours...';
             mrequest.do('POSS3', 'transaction', { fun_id: $scope.store.fun_id, badge_id: badge_id, obj_ids: $scope.cart.formatPoss3() } ).success( function(data){
+                var ticket = PrintFormatter.Ticket(data);
+                JCappucinoService.send("print", ticket);
                 $scope.state = 'Transaction réussi...';
                 $scope.state_bgcolor = "#00f500";
                 $scope.state_bordercolor = "#00e300";
