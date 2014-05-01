@@ -95,5 +95,8 @@ mozartApp.controller('StateCtrl', function($scope, $http, $modal, $timeout, mreq
             $timeout(poll, 4000);
         });
     };
-    $timeout(poll, 4000);
+    
+    $scope.$on("UPDATE_FUN",function(event,message){
+        poll();
+    });
 });
