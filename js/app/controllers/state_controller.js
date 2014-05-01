@@ -80,15 +80,13 @@ mozartApp.controller('StateCtrl', function($scope, $http, $modal, $timeout, mreq
     });
 
     JCappucinoService.subscribe("onerror", function(message) {
-        $scope.state = "Erreur de communication avec la badgeuse et l'imprimante !";
+        $scope.state = "Erreur de communication avec la badgeuse et l'imprimante";
         $scope.state_bgcolor = "#f50000";
         $scope.state_bordercolor = "#e30000";
-        // retry connection in 2sec
-        $timeout(JCappucinoService.connect, 2000);
     });
 
     JCappucinoService.subscribe("onclose", function(message) {
-        $scope.state = "Erreur de communication avec la badgeuse et l'imprimante !";
+        $scope.state = "Erreur de communication avec la badgeuse et l'imprimante";
         $scope.state_bgcolor = "#f50000";
         $scope.state_bordercolor = "#e30000";
         // retry connection in 2sec
