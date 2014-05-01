@@ -3,7 +3,7 @@
 function store() {
     this.products = {};
     this.show = [];
-    this.cat_selected = null;
+    this.cat_selected = -1;
     this.categories = {};
     this.first_cat = {};
     this.fun_id = null;

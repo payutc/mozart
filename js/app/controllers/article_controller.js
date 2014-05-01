@@ -1,6 +1,7 @@
 mozartApp.controller('ArticleCtrl',function($scope, $http, mrequest, localStorageService, DataService){
     $scope.store = DataService.store;
     $scope.cart = DataService.cart;
+    $scope.server = server_url;
 
     // Just in case, clearing the cart
     $scope.cart.clearItems();
