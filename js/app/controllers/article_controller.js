@@ -8,28 +8,35 @@ mozartApp.controller('ArticleCtrl',function($scope, $http, mrequest, localStorag
     $scope.cart.clearItems();
     $scope.$on("GET_ARTICLES",function(event,message){
         $scope.store.fun_id = message;
-        mrequest.do('POSS3','getArticles', {fun_id : message}).success(function(data){
-            if(data == null) {
-                $scope.$emit("ERROR_GET_ARTICLES", "Aucun article à vendre!");
-             }
-             else{
-                // Add all items to the store
-                for (var i = data.length - 1; i >= 0; i--) {
-                    $scope.store.addProduct(data[i]['id'], data[i]['name'], 
-                        data[i]['categorie_id'], data[i]['fundation_id'],
-                        data[i]['price'], data[i]['stock'],
-                        data[i]['alcool'], data[i]['image']);
-                };
-             }
-        });
-
         mrequest.do('POSS3','getCategories', {fun_id : [message]}).success(function(data){
             for(var i=0; i<data.length; i++) {
                 $scope.store.addCategory(data[i]);
             }
             $scope.categoryCount = Object.keys($scope.store.first_cat).length;
+            
+            // Get articles
+            mrequest.do('POSS3','getArticles', {fun_id : message}).success(function(data){
+                if(data == null) {
+                    $scope.$emit("ERROR_GET_ARTICLES", "Aucun article à vendre!");
+                 }
+                 else{
+                    // Add all items to the store
+                    for (var i = data.length - 1; i >= 0; i--) {
+                        $scope.store.addProduct(
+                            data[i]['id'], data[i]['name'],
+                            data[i]['categorie_id'], data[i]['fundation_id'],
+                            data[i]['price'], data[i]['stock'],
+                            data[i]['alcool'], data[i]['image']);
+                    };
+                 }
+            });
+            
+            // Select the first category
+            for(idc in $scope.store.categories) {
+              $scope.store.catClick($scope.store.categories[idc].id);
+              break;
+            }
         });
-        setTimeout(function() { $scope.store.catClick($scope.store.cat_selected); }, 1000);
     });
 
 

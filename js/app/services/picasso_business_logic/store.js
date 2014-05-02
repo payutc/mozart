@@ -24,15 +24,15 @@ store.prototype.getProductByName = function (name) {
 store.prototype.addProduct = function(id, name, categorie_id, fundation_id, price, stock, alcool, image) {
     var myProduct = new product(id, name, categorie_id, fundation_id, price, stock, alcool, image);
     this.products[id] = myProduct;
+    if(!this.products[id].super_parent) {
+        this.products[id].super_parent = this.getParent(this.products[id].categorie_id);
+    }
 }
 
 store.prototype.addCategory = function(cat) {
     this.categories[cat.id] = cat;
     if(cat.parent_id == null) {
         this.first_cat[cat.id] = cat;
-        if(this.cat_selected == -1) {
-            this.cat_selected = cat.id;
-        }
     }
 }
 
@@ -46,9 +46,4 @@ store.prototype.getParent = function(catId) {
 
 store.prototype.catClick = function(catId) {
     this.cat_selected = catId;  
-    for (var i in this.products) {
-        if(!this.products[i].super_parent) {
-            this.products[i].super_parent = this.getParent(this.products[i].categorie_id);
-        }
-    }
 }

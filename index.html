@@ -38,10 +38,10 @@
           <a class="navbar-brand" href="#">mozart <small>by</small> <img src="img/payutc_rect_110.png" alt="payutc"></a>
         </div>
         <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
-          <form class="navbar-form navbar-right">
+          <form class="navbar-form navbar-right ng-cloak">
             <button type="button" id="btnlogout" class="btn btn-danger" ng-click="onLogoutClick()">Déconnexion</button>
           </form>
-          <ul class="nav navbar-nav navbar-right" ng-controller="UserCtrl">
+          <ul class="nav navbar-nav navbar-right ng-cloak" ng-controller="UserCtrl">
             <li id="time"></li>
             <li><a href="#">{{ currentTime }}</a></li>
             <li><a href="#">{{ username }}</a></li>
@@ -145,7 +145,7 @@ border: 1px solid {{ state_bordercolor }};">
         </div>
       
         <div class="col-md-6 fill" id="tableau-articles">
-          <button class="btn btn-default" ng-repeat="art in store.products" ng-click="artClick(art.id)" ng-hide="art.super_parent != store.cat_selected" ng-attr-style="{{ art.image && 'background-image: url('+server+'POSS3/getImage64?img_id='+art.image+'&encode=0);' }}">{{ !art.image && art.name || "" }}</button>
+          <button class="btn btn-default" ng-repeat="art in store.products" ng-click="artClick(art.id)" ng-hide="art.super_parent != store.cat_selected" ng-attr-style="{{ art.image && 'background-image: url('+server+'POSS3/getImage64?img_id='+art.image+'&encode=0&outw=300&outh=300);' }}">{{ !art.image && art.name || "" }}</button>
         </div>
       </div><!--/row-->
     </div> <!-- /container -->
