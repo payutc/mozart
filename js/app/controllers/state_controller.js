@@ -9,7 +9,7 @@ mozartApp.controller('StateCtrl', function($scope, $http, $modal, $timeout, mreq
     $scope.formatPrix = function(price) { return PrintFormatter.formatPrix(price/100); }
       
     resetColor = function(t) {
-        setTimeout(function() {
+        $timeout(function() {
             $scope.state = "Prêt";
             $scope.state_bgcolor = "#f5f5f5";
             $scope.state_bordercolor = "#e3e3e3";
