@@ -28,8 +28,13 @@ mozartApp.controller('ArticleCtrl',function($scope, $http, mrequest, localStorag
                 $scope.store.addCategory(data[i]);
             }
             $scope.categoryCount = Object.keys($scope.store.first_cat).length;
+            
+            // Select the first category
+            for(idc in $scope.store.categories) {
+              $scope.store.catClick($scope.store.categories[idc].id);
+              break;
+            }
         });
-        setTimeout(function() { $scope.store.catClick($scope.store.cat_selected); }, 1000);
     });
 
 
