@@ -145,7 +145,7 @@ border: 1px solid {{ state_bordercolor }};">
         </div>
       
         <div class="col-md-6 fill" id="tableau-articles">
-          <button class="btn btn-default" ng-repeat="art in store.products" ng-click="artClick(art.id)" ng-hide="art.super_parent != store.cat_selected" ng-attr-style="{{ art.image && 'background-image: url('+server+'POSS3/getImage64?img_id='+art.image+'&encode=0);' }}">{{ !art.image && art.name || "" }}</button>
+          <button class="btn btn-default" ng-repeat="art in store.products" ng-click="artClick(art.id)" ng-hide="art.super_parent != store.cat_selected" ng-attr-style="{{ art.image && 'background-image: url('+server+'POSS3/getImage64?img_id='+art.image+'&encode=0&outw=300&outh=300);' }}">{{ !art.image && art.name || "" }}</button>
         </div>
       </div><!--/row-->
     </div> <!-- /container -->
