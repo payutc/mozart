@@ -4,15 +4,14 @@ mozartApp.controller('FunCtrl', function($scope, $http, $modal, mrequest){
             //No fundation
             if(data == null) {
                 $scope.$emit("CRITICAL_ERROR","Aucune fundation trouvée. Vous et/ou cette application n'avez pas de droits de vente.");
-            }
-            else{
+            } else{
+                if(data[0].fun_id == null) {
+                    data.shift();
+                }
                 if(data.length == 1) {
                     // Only one fundation, select it
                     $scope.$emit("MSG_GET_ARTICLES",data[0].fun_id);
                 } else {
-                    if(data[0].fun_id == null) {
-                        data.shift();
-                    }
                     $scope.fundations = data;
 
                     $scope.modalInstance = $modal.open({
